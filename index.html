@@ -2,326 +2,680 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MAIRUMAX | Soluciones para la construcción en Perú</title>
-<meta name="description" content="MAIRUMAX: soluciones tecnológicas, consultoría y servicios para el sector construcción en todo el Perú.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MAIRUMAX</title>
+<meta name="description" content="MAIRUMAX: Sociedad BIC que crea herramientas con inteligencia artificial para el sector AEC, junto a su comunidad.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-  :root{
-    --bg:#0f1720;
-    --bg-2:#16212d;
-    --card:#1b2836;
-    --line:#2a3a4b;
-    --text:#eef3f7;
-    --muted:#9db0c2;
-    --accent:#ff7a1a;     /* naranja obra */
-    --accent-2:#2ee6a6;   /* menta fresca */
-    --radius:18px;
-    --max:1140px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased}
-  h1,h2,h3{font-family:"Space Grotesk",sans-serif;line-height:1.1;letter-spacing:-.02em}
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
-  .tag{display:inline-block;font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-2)}
-  .btn{display:inline-flex;align-items:center;gap:.5rem;padding:.9rem 1.5rem;border-radius:999px;font-weight:600;transition:transform .2s,box-shadow .2s,background .2s}
-  .btn-main{background:var(--accent);color:#1a0d00}
-  .btn-main:hover{transform:translateY(-2px);box-shadow:0 10px 30px -8px var(--accent)}
-  .btn-ghost{border:1.5px solid var(--line);color:var(--text)}
-  .btn-ghost:hover{border-color:var(--accent-2);color:var(--accent-2)}
+/* Layout: página de desarrollador oscura; cada sección se presenta como un comando de terminal. */
+:root{
+  color-scheme:dark;
+  --bg:#0A0F1A; --bg-2:#0C1220; --panel:#0F1626; --term:#0B111D; --deep:#080D17;
+  --line:#1E2A40; --line-2:#2A3A56;
+  --text:#E8EEF6; --soft:#C3CEDC; --muted:#A9B6C8; --dim:#7C8BA1; --faint:#5B6B84;
+  --accent:#FF6B1A; --accent-2:#FF8A3D; --accent-3:#FFB37A; --on-accent:#1A0B00;
+  --ok:#4ADE80; --warn:#FBBF24; --err:#F87171; --key:#93C5FD; --kw:#C4B5FD; --str:#FDBA74;
+  --f-display:"Space Grotesk",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --max:1240px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:var(--f-display);letter-spacing:-.03em;line-height:1.05;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--accent-2)}a:hover{color:var(--accent-3)}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+img{max-width:100%}
+.wrap{max-width:var(--max);margin:0 auto;padding-inline:24px}
+.mono{font-family:var(--f-mono)}
+.bp{background-image:linear-gradient(rgba(96,165,250,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.06) 1px,transparent 1px);background-size:40px 40px}
+section{padding-block:104px}
+.bordered{border-block:1px solid var(--line)}
+.cmd{font-family:var(--f-mono);font-size:14px;color:var(--dim)}
+.cmd::before{content:"❯ ";color:var(--accent)}
+.h2{font-size:clamp(32px,4vw,52px);margin-top:14px}
+.lead{color:var(--muted);font-size:17px;max-width:420px}
+.row{display:flex;flex-wrap:wrap;gap:24px}
+.row>*{min-width:0}
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:24px;margin-bottom:40px}
 
-  /* NAV */
-  header{position:sticky;top:0;z-index:50;background:rgba(15,23,32,.82);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
-  .logo{font-family:"Space Grotesk";font-weight:700;font-size:1.4rem;display:flex;align-items:center;gap:.55rem}
-  .logo-mark{width:32px;height:32px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#ffb347);display:grid;place-items:center;color:#1a0d00;font-size:1rem}
-  .logo span{color:var(--accent)}
-  .menu{display:flex;gap:1.8rem;font-weight:500;color:var(--muted)}
-  .menu a:hover{color:var(--text)}
-  .nav .btn{padding:.6rem 1.1rem;font-size:.9rem}
-  .burger{display:none;background:none;border:0;color:var(--text);font-size:1.6rem;cursor:pointer}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 24px;border-radius:10px;font-weight:600;text-decoration:none;border:0;transition:transform .2s ease,box-shadow .2s ease}
+.btn-main{background:var(--accent);color:var(--on-accent)}
+.btn-main:hover{color:var(--on-accent);transform:translateY(-2px);box-shadow:0 12px 30px -10px var(--accent)}
+.btn-ghost{border:1.5px solid var(--line-2);color:var(--text);font-family:var(--f-mono);font-size:15px;background:transparent}
+.btn-ghost:hover{color:var(--accent-3);border-color:var(--accent)}
+.chip{transition:background-color .15s ease,border-color .15s ease,color .15s ease}
+.chip:hover{border-color:var(--accent)!important;color:var(--accent-3)}
+.tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12px;padding:4px 10px;border-radius:6px}
+.dot{width:8px;height:8px;border-radius:50%;flex:none}
 
-  /* HERO */
-  .hero{position:relative;overflow:hidden;padding:110px 0 90px}
-  .hero::before{content:"";position:absolute;inset:0;background:
-      radial-gradient(600px 400px at 85% 20%,rgba(255,122,26,.22),transparent 60%),
-      radial-gradient(500px 380px at 10% 90%,rgba(46,230,166,.14),transparent 60%);}
-  .hero::after{content:"";position:absolute;inset:0;opacity:.18;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,#000,transparent 85%)}
-  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:1.2fr .8fr;gap:48px;align-items:center}
-  .hero h1{font-size:clamp(2.4rem,5.5vw,4.2rem);margin:14px 0 20px}
-  .hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--accent),#ffc06b);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .hero p{color:var(--muted);font-size:1.12rem;max-width:560px}
-  .cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
-  .hero-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:28px;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
-  .hero-card h3{font-size:1.05rem;margin-bottom:16px;color:var(--muted);font-family:Inter;font-weight:600}
-  .chk{list-style:none;display:grid;gap:14px}
-  .chk li{display:flex;gap:12px;align-items:flex-start}
-  .chk li::before{content:"✓";flex:none;width:24px;height:24px;border-radius:50%;background:rgba(46,230,166,.15);color:var(--accent-2);display:grid;place-items:center;font-size:.8rem;font-weight:700}
+/* NAV */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(10,15,26,.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:var(--f-mono)}
+.logo{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;font-weight:700;font-size:17px}
+.logo:hover{color:var(--text)}
+.logo small{color:var(--dim);font-size:inherit}
+.menu{display:flex;gap:6px;font-size:14px}
+.menu a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px;border:1px solid transparent}
+.nav-cta{min-height:44px;padding:0 18px;font-size:14px;font-weight:700;font-family:var(--f-mono);border-radius:10px}
+.burger{display:none;width:44px;height:44px;border-radius:10px;border:1px solid var(--line-2);background:transparent;color:var(--text)}
+@media (max-width:900px){
+  .menu{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg-2);border-bottom:1px solid var(--line);padding:8px 16px}
+  .menu.open{display:flex}
+  .menu a{padding:14px 8px;border-radius:0;border-top:1px solid var(--line)}
+  .burger{display:grid;place-items:center}
+  .nav-cta{display:none}
+}
 
-  /* SECTIONS */
-  section{padding:90px 0}
-  .head{max-width:640px;margin-bottom:48px}
-  .head h2{font-size:clamp(1.9rem,3.6vw,2.7rem);margin:10px 0 12px}
-  .head p{color:var(--muted)}
-  .alt{background:var(--bg-2)}
+/* HERO */
+.hero{padding-block:88px 72px}
+.hero .row{gap:48px;align-items:center}
+.hero-copy{flex:1 1 500px}
+.pill{display:inline-flex;align-items:center;gap:10px;padding:6px 14px;border:1px solid var(--line-2);border-radius:8px;font-family:var(--f-mono);font-size:13px;color:var(--key);background:rgba(17,26,42,.85)}
+.hero h1{font-size:clamp(40px,6vw,74px);letter-spacing:-.035em;line-height:1.02;margin:24px 0;min-height:2.1em}
+.typed{font-family:var(--f-mono);letter-spacing:-.04em;color:var(--accent)}
+.cur{display:inline-block;width:.5em;height:.9em;background:var(--accent);margin-left:6px;vertical-align:-.08em;animation:blink 1s steps(1) infinite}
+.hero-copy>p{font-size:19px;color:var(--muted);max-width:560px}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
 
-  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px;transition:transform .25s,border-color .25s}
-  .card:hover{transform:translateY(-6px);border-color:var(--accent)}
-  .ico{width:52px;height:52px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem;margin-bottom:18px;background:rgba(255,122,26,.12)}
-  .card h3{font-size:1.3rem;margin-bottom:10px}
-  .card p{color:var(--muted);font-size:.97rem}
-  .card ul{list-style:none;margin-top:16px;display:grid;gap:7px;font-size:.92rem}
-  .card ul li::before{content:"→ ";color:var(--accent-2)}
+.term{flex:1 1 480px;border:1px solid var(--line-2);border-radius:16px;background:var(--term);box-shadow:0 40px 90px -40px rgba(0,0,0,.9);overflow:hidden;font-family:var(--f-mono)}
+.term-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--panel)}
+.term-bar i{width:12px;height:12px;border-radius:50%;display:block}
+.term-bar span{flex:1;text-align:center;font-size:12px;color:var(--dim)}
+.term-out{height:330px;padding:18px 18px 6px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;font-size:14px;line-height:1.6}
+.term-out div{white-space:pre-wrap;word-break:break-word}
+.term-in{display:flex;align-items:center;gap:10px;padding:8px 18px 16px;font-size:14px}
+.term-in label{color:var(--accent);white-space:nowrap}
+.term-in input{flex:1;min-width:0;min-height:36px;border:0;outline:none;background:transparent;color:var(--text);font:inherit;caret-color:var(--accent)}
+.term-in input::placeholder,.join input::placeholder{color:var(--faint)}
+.term-chips{display:flex;flex-wrap:wrap;gap:6px;padding:12px 18px 16px;border-top:1px solid var(--line);background:#0D1422}
+.term-chips button{min-height:34px;padding:0 12px;border-radius:8px;border:1px solid var(--line-2);background:transparent;color:var(--muted);font-family:var(--f-mono);font-size:13px}
 
-  .why{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
-  .why div{border-left:3px solid var(--accent);padding:6px 0 6px 18px}
-  .why h3{font-size:1.15rem;margin-bottom:6px}
-  .why p{color:var(--muted);font-size:.93rem}
+.ticker{border-top:1px solid var(--line);background:var(--bg-2);overflow:hidden}
+.ticker-track{display:flex;width:max-content;gap:48px;padding:14px 0;font-family:var(--f-mono);font-size:14px;color:var(--muted);white-space:nowrap;animation:marq 40s linear infinite}
 
-  .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;counter-reset:s}
-  .step{position:relative;padding:26px;border-radius:var(--radius);border:1px dashed var(--line)}
-  .step::before{counter-increment:s;content:"0" counter(s);font-family:"Space Grotesk";font-weight:700;font-size:2.4rem;color:var(--accent);opacity:.9;display:block;margin-bottom:8px}
-  .step h3{font-size:1.1rem;margin-bottom:6px}
-  .step p{color:var(--muted);font-size:.92rem}
+/* PRODUCTO */
+.prod-title{font-size:clamp(40px,5.4vw,72px);letter-spacing:-.04em;line-height:1;margin:18px 0 16px}
+.prod-lead{font-size:19px;color:var(--soft);max-width:640px}
+.seg{display:inline-flex;padding:5px;border-radius:12px;border:1px solid var(--line-2);background:var(--term);gap:4px}
+.seg button{min-height:42px;padding:0 18px;border-radius:8px;border:0;background:transparent;color:var(--muted);font-family:var(--f-mono);font-weight:700;font-size:14px}
+.seg button[aria-selected="true"]{background:var(--accent);color:var(--on-accent)}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px}
+.badges span{padding:6px 10px;border-radius:6px;border:1px solid var(--line);background:var(--panel);font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.feat-list{flex:1 1 340px;display:flex;flex-direction:column;gap:8px}
+.feat-list button{display:flex;align-items:center;gap:14px;min-height:64px;padding:12px 16px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);text-align:left}
+.feat-list button kbd{flex:none;min-width:96px;font-family:var(--f-mono);font-size:12px;color:var(--dim);border:1px solid var(--line-2);border-radius:6px;padding:4px 8px;text-align:center}
+.feat-list button span{font-family:var(--f-display);font-weight:600;font-size:17px;line-height:1.2}
+.feat-list button[aria-selected="true"]{border-color:var(--accent);background:rgba(255,107,26,.08)}
+.feat-list button[aria-selected="true"] kbd{color:var(--accent-2);border-color:rgba(255,107,26,.5)}
+.window{flex:2 1 560px;border:1px solid var(--line-2);border-radius:16px;background:var(--term);overflow:hidden;display:flex;flex-direction:column}
+.window .term-bar i{width:10px;height:10px}
+.shot{background:#070B13;aspect-ratio:16/10;max-width:100%}
+.shot img{width:100%;height:100%;object-fit:contain;display:block}
+.shot-cap{padding:22px 24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:14px 32px}
+.shot-cap p{flex:1 1 260px;min-width:0;font-size:16px}
+.shot-cap small{display:block;font-family:var(--f-mono);font-size:12px;color:var(--ok);margin-bottom:4px}
+.devbox{flex:2 1 560px;border:1px solid rgba(251,191,36,.35);border-radius:16px;background:var(--term);padding:22px 24px;font-family:var(--f-mono);font-size:14px;line-height:1.9}
+.devbox .ctas{margin-top:14px;gap:10px}
+.devbox .btn{min-height:44px;padding:0 16px;font-size:14px;font-weight:700;font-family:var(--f-body)}
+.soon{flex:1 1 300px;border:1.5px dashed var(--line-2);border-radius:16px;padding:22px 24px;display:flex;flex-direction:column;justify-content:center;gap:8px}
 
-  .peru{display:flex;flex-wrap:wrap;gap:10px;margin-top:8px}
-  .peru span{padding:.5rem 1rem;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:.9rem;color:var(--muted)}
+/* BANDERA */
+.flag{font-family:var(--f-display);font-weight:600;font-size:clamp(28px,4vw,52px);line-height:1.12;letter-spacing:-.025em;margin-top:24px;max-width:1080px}
+.flag mark{color:var(--on-accent);background:var(--accent);padding:0 .15em;border-radius:4px}
+.hashtags{display:flex;flex-wrap:wrap;gap:10px;margin-top:36px;font-family:var(--f-mono);font-size:13px}
+.hashtags span{padding:6px 12px;border-radius:6px;background:#111A2B;border:1px solid var(--line);color:var(--key)}
 
-  /* CONTACT */
-  .contact{display:grid;grid-template-columns:.9fr 1.1fr;gap:40px;align-items:start}
-  .info{display:grid;gap:16px;margin-top:24px}
-  .info a,.info div{display:flex;gap:12px;align-items:center;color:var(--muted)}
-  .info b{color:var(--text);font-weight:600}
-  form{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:30px;display:grid;gap:14px}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  label{font-size:.85rem;color:var(--muted);display:grid;gap:6px}
-  input,select,textarea{font:inherit;color:var(--text);background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:.8rem 1rem;outline:none;transition:border-color .2s}
-  input:focus,select:focus,textarea:focus{border-color:var(--accent-2)}
-  textarea{min-height:120px;resize:vertical}
-  form .btn{justify-content:center;border:0;cursor:pointer;font-size:1rem}
+/* EDITOR */
+.editor{border:1px solid var(--line-2);border-radius:16px;overflow:hidden;background:var(--term)}
+.tabs{display:flex;overflow-x:auto;background:var(--panel);border-bottom:1px solid var(--line)}
+.tabs button{display:flex;align-items:center;gap:8px;min-height:48px;padding:0 20px;border:0;border-right:1px solid var(--line);border-top:2px solid transparent;background:transparent;color:var(--dim);font-family:var(--f-mono);font-size:14px;white-space:nowrap}
+.tabs button[aria-selected="true"]{border-top-color:var(--accent);background:var(--term);color:var(--text)}
+.tabs i{width:8px;height:8px;border-radius:2px;display:block}
+.code{flex:1.3 1 480px;padding:28px 0;overflow-x:auto;font-family:var(--f-mono);font-size:clamp(14px,1.4vw,17px);line-height:1.9;min-height:300px}
+.code div{display:flex}
+.code .ln{flex:none;width:52px;padding-right:18px;text-align:right;color:#3E4C63;user-select:none}
+.code .src{white-space:pre}
+.human{flex:1 1 360px;padding:32px;border-left:1px solid var(--line);background:#0E1626;display:flex;flex-direction:column;gap:16px}
+.human h3{font-size:32px}
+.human .practice{margin-top:auto;padding:16px;border-radius:10px;border:1px dashed var(--line-2);color:var(--muted);font-size:15px}
+.editor-body{display:flex;flex-wrap:wrap}
+.editor-body>*{min-width:0}
 
-  footer{border-top:1px solid var(--line);padding:30px 0;color:var(--muted);font-size:.9rem}
-  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+/* PIPELINE */
+.pipe{border:1px solid var(--line-2);border-radius:16px;background:var(--term);overflow:hidden}
+.pipe-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;border-bottom:1px solid var(--line);background:var(--panel);font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.run-btn{min-height:40px;padding:0 18px;border-radius:8px;border:0;background:var(--accent);color:var(--on-accent);font-family:var(--f-mono);font-weight:700;font-size:14px}
+.run-btn[disabled]{background:var(--line-2);color:var(--text);cursor:wait}
+.progress{height:3px;background:var(--line)}
+.progress div{height:3px;width:0;background:var(--accent);transition:width .5s ease}
+.stages{padding:32px 24px 12px;display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px}
+.stage{display:flex;flex-direction:column;gap:10px;padding:20px;text-align:left;border-radius:12px;border:1.5px solid var(--line);background:var(--panel);color:var(--text);transition:all .25s ease}
+.stage .top{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:12px;color:var(--dim)}
+.stage .st{color:var(--faint)}
+.stage strong{font-family:var(--f-display);font-weight:600;font-size:20px;line-height:1.15}
+.stage code{font-family:var(--f-mono);font-size:13px;color:var(--key)}
+.stage.sel{border-color:#3B5B8C}
+.stage.done{border-color:#2F6B4A;background:rgba(74,222,128,.05)}
+.stage.done .st{color:var(--ok)}
+.stage.live{border-color:var(--accent);background:rgba(255,107,26,.08);animation:pulse 1.1s ease-out infinite}
+.stage.live .st{color:var(--accent-2)}
+.return{margin:0 24px;padding:10px 0 24px;display:flex;align-items:center;gap:12px;font-family:var(--f-mono);font-size:13px;color:var(--dim)}
+.return hr{flex:1;border:0;border-top:1px dashed var(--line-2);margin:0}
+.pipe-foot{display:flex;flex-wrap:wrap;border-top:1px solid var(--line)}
+.pipe-foot>*{flex:1 1 400px;min-width:0}
+.info{padding:28px 24px}
+.info h3{font-size:28px;margin:8px 0}
+.info p{color:var(--soft);font-size:17px}
+.log{padding:24px;border-left:1px solid var(--line);background:var(--deep);font-family:var(--f-mono);font-size:13px;line-height:1.8;min-height:180px}
+.log div{white-space:pre-wrap}
 
-  .wa{position:fixed;right:20px;bottom:20px;z-index:60;width:58px;height:58px;border-radius:50%;background:#25d366;display:grid;place-items:center;box-shadow:0 10px 30px -6px rgba(37,211,102,.6);transition:transform .2s}
-  .wa:hover{transform:scale(1.08)}
+/* MANIFIESTO */
+.json{border:1px solid var(--line-2);border-radius:16px;background:var(--term);padding:28px clamp(18px,3vw,36px);font-family:var(--f-mono);font-size:clamp(14px,1.4vw,17px);line-height:1.9;color:var(--muted)}
+.json .in{padding-left:2em}
+.k{color:var(--key)}.s{color:var(--str)}
+.json button{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 10px 0 4px;margin-left:-4px;border:0;border-radius:6px;background:transparent;color:var(--key);font:inherit}
+.json button .arr{color:var(--accent);display:inline-block;transition:transform .2s ease}
+.json button[aria-expanded="true"] .arr{transform:rotate(90deg)}
+.json button .hint{color:var(--faint)}
+.json button[aria-expanded="true"] .hint{display:none}
+.json .val{margin:6px 0 18px 1.6em;padding:20px 24px;border-left:2px solid var(--accent);background:rgba(255,107,26,.05);border-radius:0 10px 10px 0}
+.json .val p{font-family:var(--f-display);font-weight:500;font-size:clamp(20px,2.2vw,28px);line-height:1.35;letter-spacing:-.01em;color:#F3E9DF}
 
-  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-  .reveal.in{opacity:1;transform:none}
+/* ROLES */
+.roles{display:flex;flex-wrap:wrap;gap:10px}
+.roles button{min-height:48px;padding:0 20px;border-radius:10px;border:1.5px solid var(--line-2);background:transparent;color:var(--muted);font-family:var(--f-mono);font-size:15px}
+.roles button[aria-selected="true"]{border-color:var(--accent);background:rgba(255,107,26,.1);color:var(--accent-3)}
+.role-card{flex:1.2 1 420px;border:1px solid var(--line);border-radius:16px;background:var(--panel);padding:36px}
+.role-card h3{font-size:30px;margin-bottom:12px}
+.role-card p{color:var(--soft);font-size:18px}
+.role-log{flex:1 1 380px;border:1px solid var(--line);border-radius:16px;background:var(--deep);padding:28px;font-family:var(--f-mono);font-size:14px;line-height:2}
 
-  /* RESPONSIVE */
-  @media (max-width:900px){
-    .hero .wrap,.contact{grid-template-columns:1fr}
-    .grid3{grid-template-columns:1fr}
-    .why,.steps{grid-template-columns:1fr 1fr}
-    .menu{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;gap:0;background:var(--bg-2);border-bottom:1px solid var(--line)}
-    .menu.open{display:flex}
-    .menu a{padding:16px 20px;border-top:1px solid var(--line)}
-    .burger{display:block}
-    .nav .btn{display:none}
-  }
-  @media (max-width:560px){
-    .why,.steps,.row{grid-template-columns:1fr}
-    .hero{padding:70px 0 60px}
-    section{padding:70px 0}
-  }
-  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+/* CTA */
+.join-box{border-radius:20px;border:1px solid var(--accent);background:var(--term);display:flex;flex-wrap:wrap;gap:40px;padding:clamp(32px,5vw,64px);align-items:center}
+.join-box>*{flex:1 1 440px;min-width:0}
+.join-box h2{font-size:clamp(32px,4.4vw,56px);letter-spacing:-.035em;line-height:1.02}
+.join{font-family:var(--f-mono);font-size:15px}
+.join label{display:block;color:var(--dim);font-size:13px;margin-bottom:8px}
+.join .field{display:flex;flex-wrap:wrap;align-items:center;gap:10px;padding:8px 8px 8px 16px;border-radius:12px;border:1px solid var(--line-2);background:var(--deep)}
+.join .field span{color:var(--accent);white-space:nowrap}
+.join input{flex:1 1 180px;min-width:0;min-height:44px;border:0;outline:none;background:transparent;color:var(--text);font:inherit;caret-color:var(--accent)}
+.join button{min-height:44px;padding:0 18px;border-radius:8px;border:0;background:var(--accent);color:var(--on-accent);font-family:var(--f-mono);font-weight:700;font-size:14px}
+.join-msg{margin-top:12px;font-size:14px;min-height:1.6em}
+
+footer{border-top:1px solid var(--line)}
+footer .wrap{padding-block:32px 48px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;color:#8C9AB0;font-size:14px}
+.status{position:sticky;bottom:0;z-index:30;display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 20px;padding:6px 16px calc(6px + env(safe-area-inset-bottom,0px));background:var(--accent);color:var(--on-accent);font-family:var(--f-mono);font-size:12px;font-weight:500}
+.status span{display:flex;gap:18px;flex-wrap:wrap}
+
+.fade{animation:fade .35s ease}
+.glow{animation:glow 2s ease-in-out infinite}
+@keyframes blink{50%{opacity:0}}
+@keyframes fade{from{opacity:.2;transform:translateY(6px)}to{opacity:1;transform:none}}
+@keyframes marq{to{transform:translateX(-50%)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,107,26,.6)}100%{box-shadow:0 0 0 12px rgba(255,107,26,0)}}
+@keyframes glow{50%{opacity:.35}}
+@media (max-width:560px){
+  section{padding-block:72px}
+  .wrap{padding-inline:16px}
+  .human,.log{border-left:0;border-top:1px solid var(--line)}
+  .feat-list button kbd{min-width:84px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 
 <header>
   <div class="wrap nav">
-    <a href="#inicio" class="logo"><div class="logo-mark">▲</div>MAIRU<span>MAX</span></a>
-    <nav class="menu" id="menu">
-      <a href="#servicios">Servicios</a>
-      <a href="#nosotros">Nosotros</a>
-      <a href="#proceso">Proceso</a>
-      <a href="#contacto">Contacto</a>
+    <a href="#inicio" class="logo" aria-label="MAIRUMAX, inicio">
+      <svg width="28" height="28" viewBox="0 0 30 30" aria-hidden="true"><rect x=".5" y=".5" width="29" height="29" rx="7" fill="#FF6B1A"/><path d="M8 20 L13 15 L8 10" fill="none" stroke="#1A0B00" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 21 H22" stroke="#1A0B00" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <span><small>~/</small>mairumax</span>
+    </a>
+    <nav class="menu" id="menu" aria-label="Secciones">
+      <a class="chip" href="#productos">./productos</a>
+      <a class="chip" href="#bandera">./bandera</a>
+      <a class="chip" href="#principios">./principios</a>
+      <a class="chip" href="#modelo">./modelo-bic</a>
+      <a class="chip" href="#mision">./manifiesto</a>
     </nav>
-    <a href="#contacto" class="btn btn-main">Cotiza gratis</a>
-    <button class="burger" id="burger" aria-label="Abrir menú">☰</button>
+    <a href="#unete" class="btn btn-main nav-cta">$ unirme</a>
+    <button class="burger" id="burger" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
   </div>
 </header>
 
 <main>
-  <!-- HERO -->
-  <section class="hero" id="inicio">
-    <div class="wrap">
+<!-- HERO -->
+<section id="inicio" class="bp hero" style="padding-bottom:0;border-bottom:1px solid var(--line)">
+  <div class="wrap row" style="padding-bottom:72px">
+    <div class="hero-copy">
+      <div class="pill"><span class="dot glow" style="background:var(--ok)"></span>sociedad_bic · sector=AEC · ia=on</div>
+      <h1>IA aplicada para quienes<br><span class="typed" id="typed">diseñan.</span><span class="cur" aria-hidden="true"></span></h1>
+      <p>Creamos herramientas de alta calidad con inteligencia artificial, las mejoramos junto a los profesionales del sector y devolvemos valor a la comunidad.</p>
+      <div class="ctas">
+        <a href="#unete" class="btn btn-main">Quiero participar
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#productos" class="btn btn-ghost">▶ ver PixPin Max</a>
+      </div>
+    </div>
+
+    <div class="term" aria-label="Terminal interactiva">
+      <div class="term-bar"><i style="background:var(--err)"></i><i style="background:var(--warn)"></i><i style="background:var(--ok)"></i><span>mairumax — zsh — 80×24</span></div>
+      <div class="term-out" id="termOut" aria-live="polite"></div>
+      <form class="term-in" id="termForm" autocomplete="off">
+        <label for="termIn">❯ mairumax</label>
+        <input id="termIn" placeholder="escribe help y pulsa Enter" spellcheck="false">
+      </form>
+      <div class="term-chips" id="termChips"></div>
+    </div>
+  </div>
+
+  <div class="ticker" aria-hidden="true"><div class="ticker-track" id="ticker"></div></div>
+</section>
+
+<!-- PRODUCTO ESTRELLA -->
+<section id="productos" class="bp bordered">
+  <div class="wrap">
+    <div class="cmd">mairumax products --featured</div>
+    <div class="sec-head" style="margin:14px 0 0">
+      <div style="flex:1 1 560px;min-width:0">
+        <div style="display:flex;flex-wrap:wrap;gap:12px">
+          <span class="tag" style="background:var(--accent);color:var(--on-accent);font-weight:700;letter-spacing:.1em">PRODUCTO ESTRELLA</span>
+          <span class="tag" style="color:var(--warn);border:1px solid rgba(251,191,36,.45);background:rgba(251,191,36,.08)"><span class="dot glow" style="width:7px;height:7px;background:var(--warn)"></span>EN DESARROLLO · BETA</span>
+        </div>
+        <h2 class="prod-title">PixPin <span style="color:var(--accent)">Max</span></h2>
+        <p class="prod-lead">Tu cuaderno de ingeniería: captura, anota, abre planos y modelos 3D y ordénalo todo por proyectos. Reúne las funciones que más me sirvieron durante la carrera universitaria, pensado para estudiantes AEC y útil también para quienes ya están en la industria.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <span class="mono" style="font-size:12px;color:var(--dim)">mostrar beneficios para:</span>
+        <div class="seg" role="tablist" aria-label="Público" id="audSeg">
+          <button type="button" role="tab" aria-selected="true" data-aud="est">Estudiantes</button>
+          <button type="button" role="tab" aria-selected="false" data-aud="pro">Profesionales</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="badges">
+      <span style="color:var(--key)">Windows 10/11</span><span style="color:var(--key)">Android 10+</span>
+      <span style="color:var(--ok)">sin nube · sin cuentas</span><span>sincroniza por Wi‑Fi</span><span>Rust · Kotlin</span>
+    </div>
+
+    <div class="row" style="margin-top:32px;gap:20px;align-items:stretch">
+      <div class="feat-list" role="tablist" aria-label="Funciones de PixPin Max" id="featList"></div>
+      <div class="window">
+        <div class="term-bar"><i style="background:var(--err)"></i><i style="background:var(--warn)"></i><i style="background:var(--ok)"></i><span id="featFile">PixPin Max</span></div>
+        <div class="shot"><img id="featImg" src="img/captura-despues.png" alt="Captura de pantalla anotada en PixPin Max" width="1100" height="688"></div>
+        <div class="shot-cap" id="featCap">
+          <p id="featDesc" style="color:var(--soft)"></p>
+          <p><small id="audLabel">✓ si eres estudiante AEC</small><span id="featUse"></span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:20px;gap:20px;align-items:stretch">
+      <div class="devbox">
+        <div><span style="color:var(--warn)">[dev]</span> PixPin Max todavía está en desarrollo.</div>
+        <div><span style="color:var(--dim)">[info]</span> <span style="color:var(--muted)">algunas funciones pueden cambiar o fallar mientras la mejoramos.</span></div>
+        <div><span style="color:var(--ok)">[tú]</span> <span style="color:var(--muted)">pruébala y cuéntanos qué falta: así funciona la construcción colectiva.</span></div>
+        <div class="ctas">
+          <a class="btn btn-main" href="https://github.com/1xmanMAX/PIXPIN_PRO_WINDOWS/releases" target="_blank" rel="noopener">Probar beta · Windows</a>
+          <a class="btn" style="border:1.5px solid var(--accent);color:var(--accent-2)" href="https://github.com/1xmanMAX/PIXPIN_PRO_ANDROID/releases/latest" target="_blank" rel="noopener">Probar beta · Android</a>
+          <a class="btn" style="border:1px solid var(--line-2);color:var(--muted);font-weight:500" href="https://github.com/1xmanMAX/PIXPIN_PRO_ANDROID/issues" target="_blank" rel="noopener">Reportar idea o error</a>
+        </div>
+      </div>
+      <div class="soon">
+        <span class="mono" style="font-size:12px;color:var(--dim)">mairumax products --all</span>
+        <span style="font-family:var(--f-display);font-weight:600;font-size:22px">Más herramientas en camino</span>
+        <span style="color:var(--muted);font-size:15px">Nuevos productos para el sector AEC, construidos con la comunidad.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BANDERA -->
+<section id="bandera">
+  <div class="wrap">
+    <div class="cmd">cat bandera.txt</div>
+    <p class="flag">IA aplicada e innovación tecnológica para el sector AEC, con herramientas de <mark>alta calidad</mark>, <span style="color:var(--accent)">alto nivel de optimización</span> y diseñadas desde la <span class="mono" style="font-size:.85em;color:var(--ok)">práctica_real</span> de obra y oficina.</p>
+    <div class="hashtags"><span>#arquitectura</span><span>#ingeniería</span><span>#construcción</span><span style="color:var(--ok)">#lucro+impacto</span></div>
+  </div>
+</section>
+
+<!-- PRINCIPIOS -->
+<section id="principios" class="bp bordered">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><div class="cmd">ls principios/</div><h2 class="h2">4 principios, escritos en código.</h2></div>
+      <p class="lead">Abre cada archivo. A la izquierda, cómo lo pensamos; a la derecha, qué significa para ti.</p>
+    </div>
+    <div class="editor">
+      <div class="tabs" role="tablist" aria-label="Principios" id="tabs"></div>
+      <div class="editor-body fade" id="editorBody">
+        <div class="code" id="code"></div>
+        <div class="human">
+          <div class="mono" style="font-size:12px;color:var(--dim);letter-spacing:.06em" id="prN">// EN LENGUAJE HUMANO</div>
+          <h3 id="prT"></h3>
+          <p id="prD" style="font-size:18px;color:#D3DCE8"></p>
+          <div class="practice"><span class="mono" style="font-size:12px;color:var(--ok)">✓ en la práctica</span><br><span id="prX"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MODELO BIC -->
+<section id="modelo">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:48px">
+      <div style="flex:1 1 520px;min-width:0"><div class="cmd">mairumax run ciclo --bic</div><h2 class="h2">Crecemos porque nuestra comunidad crece.</h2></div>
+      <p class="lead" style="flex:1 1 360px;max-width:none">Como Sociedad BIC buscamos rentabilidad e impacto a la vez. Ejecuta el ciclo y mira cómo cada aporte termina volviendo al sector.</p>
+    </div>
+    <div class="pipe">
+      <div class="pipe-bar">
+        <span>pipeline: <span style="color:var(--text)">valor-colectivo</span> · ciclos ejecutados: <span style="color:var(--ok)" id="cycles">0</span></span>
+        <button type="button" class="run-btn" id="runBtn">▶ run ciclo</button>
+      </div>
+      <div class="progress"><div id="prog"></div></div>
+      <div class="stages" id="stages"></div>
+      <div class="return">
+        <svg width="28" height="20" viewBox="0 0 28 20" fill="none" stroke="#FF6B1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M26 4v6H4"/><path d="M9 5L4 10l5 5"/></svg>
+        <hr><span>retorno → formación · alianzas · apoyo al sector → <span style="color:var(--accent-2)">stage 01</span></span>
+      </div>
+      <div class="pipe-foot">
+        <div class="info" id="info" aria-live="polite"></div>
+        <div class="log" id="log"><div style="color:var(--faint)"># pulsa ▶ run para ejecutar el ciclo</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MANIFIESTO -->
+<section id="mision" class="bp bordered">
+  <div class="wrap">
+    <div class="cmd">cat manifiesto.json</div>
+    <h2 class="h2" style="margin-bottom:36px">Misión y visión.</h2>
+    <div class="json">
+      <div>{</div>
+      <div class="in"><span class="k">"empresa"</span>: <span class="s">"MAIRUMAX"</span>,</div>
+      <div class="in"><span class="k">"tipo"</span>: <span class="s">"Sociedad BIC"</span>,</div>
+      <div class="in"><span class="k">"fines"</span>: [<span class="s">"lucro"</span>, <span class="s">"impacto"</span>],</div>
+      <div class="in">
+        <button type="button" aria-expanded="true" aria-controls="mvM"><span class="arr">▸</span>"mision":<span class="hint">"…" // clic para abrir</span></button>
+        <div class="val fade" id="mvM"><p>Crear herramientas tecnológicas e inteligentes de alta calidad que optimicen el trabajo de los profesionales y empresas del sector AEC, impulsando la innovación y fortaleciendo a la comunidad mediante la colaboración, la formación y las alianzas, de manera sostenible y rentable.</p></div>
+      </div>
+      <div class="in">
+        <button type="button" aria-expanded="false" aria-controls="mvV"><span class="arr">▸</span>"vision":<span class="hint">"…" // clic para abrir</span></button>
+        <div class="val fade" id="mvV" hidden><p>Ser la empresa líder en innovación tecnológica e inteligencia artificial aplicada al sector AEC en la región, reconocida por la calidad de sus herramientas y por haber impulsado el crecimiento de miles de profesionales, universidades y empresas del sector.</p></div>
+      </div>
+      <div>}</div>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIÉN -->
+<section id="comunidad">
+  <div class="wrap">
+    <div class="cmd">mairumax init --rol</div>
+    <h2 class="h2" style="margin-bottom:32px">¿Desde dónde construyes?</h2>
+    <div class="roles" role="tablist" aria-label="Rol" id="roles"></div>
+    <div class="row fade" id="roleBody" style="margin-top:24px;gap:20px">
+      <div class="role-card"><h3 id="roleT"></h3><p id="roleH"></p></div>
+      <div class="role-log" id="roleLog"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ÚNETE -->
+<section id="unete" style="padding-top:0">
+  <div class="wrap">
+    <div class="join-box">
       <div>
-        <span class="tag">Construcción · Tecnología · Perú</span>
-        <h1>Construimos el futuro con <em>ideas frescas</em> y tecnología.</h1>
-        <p>En MAIRUMAX somos un equipo joven que impulsa proyectos de construcción en todo el Perú con soluciones tecnológicas, consultoría especializada y servicios integrales.</p>
-        <div class="cta">
-          <a href="#contacto" class="btn btn-main">Hablemos de tu proyecto →</a>
-          <a href="#servicios" class="btn btn-ghost">Ver servicios</a>
+        <h2>Construyamos juntos las herramientas del sector.</h2>
+        <p style="font-size:18px;margin-top:16px;max-width:520px;color:var(--muted)">Prueba las herramientas antes que nadie y ayúdanos a mejorarlas.</p>
+      </div>
+      <form class="join" id="joinForm" novalidate>
+        <label for="joinMail">tu correo profesional</label>
+        <div class="field">
+          <span>$ unirme --email</span>
+          <input id="joinMail" type="email" placeholder="nombre@empresa.com" autocomplete="email">
+          <button type="submit">Enter ↵</button>
         </div>
-      </div>
-      <div class="hero-card reveal">
-        <h3>¿Qué ganas con MAIRUMAX?</h3>
-        <ul class="chk">
-          <li>Obras más ordenadas, medibles y a tiempo</li>
-          <li>Menos sobrecostos gracias a la planificación digital</li>
-          <li>Asesoría técnica cercana y sin rodeos</li>
-          <li>Atención en Lima y regiones del Perú</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- SERVICIOS -->
-  <section class="alt" id="servicios">
-    <div class="wrap">
-      <div class="head reveal">
-        <span class="tag">Servicios</span>
-        <h2>Todo lo que tu obra necesita, en un solo equipo.</h2>
-        <p>Combinamos ingeniería, tecnología y gestión para que cada proyecto avance con claridad desde el diseño hasta la entrega.</p>
-      </div>
-      <div class="grid3">
-        <article class="card reveal">
-          <div class="ico">💡</div>
-          <h3>Soluciones tecnológicas</h3>
-          <p>Digitalizamos tu obra para decidir con datos reales.</p>
-          <ul>
-            <li>Modelado BIM y coordinación 3D</li>
-            <li>Topografía y levantamientos con drones</li>
-            <li>Control digital de avance y costos</li>
-            <li>Software y automatización a medida</li>
-          </ul>
-        </article>
-        <article class="card reveal">
-          <div class="ico">📐</div>
-          <h3>Consultoría</h3>
-          <p>Te acompañamos en cada decisión técnica y de gestión.</p>
-          <ul>
-            <li>Elaboración de expedientes técnicos</li>
-            <li>Supervisión y gestión de proyectos</li>
-            <li>Presupuestos, metrados y valorizaciones</li>
-            <li>Asesoría en normativa y licencias</li>
-          </ul>
-        </article>
-        <article class="card reveal">
-          <div class="ico">🏗️</div>
-          <h3>Otros servicios</h3>
-          <p>Soporte integral para que nada frene tu proyecto.</p>
-          <ul>
-            <li>Seguridad y salud en obra (SSOMA)</li>
-            <li>Construcción sostenible y eficiencia</li>
-            <li>Capacitación a equipos técnicos</li>
-            <li>Ejecución de obras menores</li>
-          </ul>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <!-- NOSOTROS -->
-  <section id="nosotros">
-    <div class="wrap">
-      <div class="head reveal">
-        <span class="tag">Nosotros</span>
-        <h2>Jóvenes, técnicos y obsesionados con hacerlo bien.</h2>
-        <p>Nacimos para traer una mirada nueva al sector construcción peruano: más tecnología, más transparencia y un trato cercano con cada cliente.</p>
-      </div>
-      <div class="why">
-        <div class="reveal"><h3>Innovación real</h3><p>Usamos herramientas digitales que hacen tu obra más eficiente.</p></div>
-        <div class="reveal"><h3>Respuesta rápida</h3><p>Equipo ágil que responde y se adapta a tus tiempos.</p></div>
-        <div class="reveal"><h3>Transparencia</h3><p>Reportes claros de avance, costos y riesgos.</p></div>
-        <div class="reveal"><h3>Alcance nacional</h3><p>Trabajamos en Lima y en las regiones del Perú.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PROCESO -->
-  <section class="alt" id="proceso">
-    <div class="wrap">
-      <div class="head reveal">
-        <span class="tag">Cómo trabajamos</span>
-        <h2>Simple, claro y en 4 pasos.</h2>
-      </div>
-      <div class="steps">
-        <div class="step reveal"><h3>Diagnóstico</h3><p>Escuchamos tu necesidad y evaluamos el proyecto.</p></div>
-        <div class="step reveal"><h3>Propuesta</h3><p>Te enviamos una solución y cotización a medida.</p></div>
-        <div class="step reveal"><h3>Ejecución</h3><p>Ponemos en marcha el plan con seguimiento constante.</p></div>
-        <div class="step reveal"><h3>Entrega</h3><p>Cerramos con resultados medibles y soporte posterior.</p></div>
-      </div>
-      <div style="margin-top:56px" class="reveal">
-        <span class="tag">Presencia en el Perú</span>
-        <div class="peru">
-          <span>Lima</span><span>Arequipa</span><span>Cusco</span><span>La Libertad</span><span>Piura</span><span>Junín</span><span>Ica</span><span>y más regiones</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACTO -->
-  <section id="contacto">
-    <div class="wrap contact">
-      <div class="reveal">
-        <span class="tag">Contacto</span>
-        <h2 style="font-size:clamp(1.9rem,3.6vw,2.7rem);margin:10px 0 12px">¿Tienes un proyecto en mente?</h2>
-        <p style="color:var(--muted)">Cuéntanos qué necesitas y te respondemos con una propuesta sin compromiso.</p>
-        <div class="info">
-          <a href="mailto:contacto@mairumax.com">✉️ <b>contacto@mairumax.com</b></a>
-          <a href="https://wa.me/51900000000" target="_blank" rel="noopener">📱 <b>+51 900 000 000</b></a>
-          <div>📍 <b>Lima, Perú</b></div>
-        </div>
-      </div>
-      <form id="form" class="reveal">
-        <div class="row">
-          <label>Nombre<input name="nombre" required placeholder="Tu nombre"></label>
-          <label>Teléfono<input name="telefono" type="tel" placeholder="+51 ..."></label>
-        </div>
-        <label>Correo<input name="correo" type="email" required placeholder="tucorreo@empresa.com"></label>
-        <label>Servicio de interés
-          <select name="servicio">
-            <option>Soluciones tecnológicas</option>
-            <option>Consultoría</option>
-            <option>Otros servicios</option>
-          </select>
-        </label>
-        <label>Mensaje<textarea name="mensaje" placeholder="Cuéntanos sobre tu proyecto..."></textarea></label>
-        <button class="btn btn-main" type="submit">Enviar mensaje →</button>
+        <div class="join-msg" id="joinMsg" aria-live="polite"></div>
       </form>
     </div>
-  </section>
+  </div>
+</section>
 </main>
 
 <footer>
   <div class="wrap">
-    <div><b style="color:var(--text)">MAIRUMAX</b> · Soluciones para la construcción</div>
-    <div>© <span id="y"></span> MAIRUMAX · Perú</div>
+    <span><b style="color:var(--text)">MAIRUMAX</b> · Sociedad BIC · IA aplicada al sector AEC</span>
+    <span>contacto@mairumax.com · Lima, Perú</span>
   </div>
 </footer>
 
-<a class="wa" href="https://wa.me/51900000000" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
-  <svg width="30" height="30" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.5-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.3.5-.4.4c-.1.1-.3.3-.1.6.2.3.7 1.2 1.5 1.9 1 .9 1.9 1.2 2.2 1.3.3.1.4.1.6-.1l.8-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.4.2.5.3.1.2.1.8-.1 1.4Z"/></svg>
-</a>
+<div class="status" aria-hidden="true">
+  <span><span>⎇ main</span><span>● IA online</span><span>BIC: lucro + impacto</span></span>
+  <span><span>sector: AEC</span><span>UTF-8</span><span>Lima <span id="clock"></span></span></span>
+</div>
 
 <script>
-  document.getElementById('y').textContent = new Date().getFullYear();
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const el = (tag, attrs = {}, text) => { const e = document.createElement(tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; };
+  const retrigger = (node) => { node.classList.remove('fade'); void node.offsetWidth; node.classList.add('fade'); };
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const menu = document.getElementById('menu');
-  document.getElementById('burger').onclick = () => menu.classList.toggle('open');
-  menu.querySelectorAll('a').forEach(a => a.onclick = () => menu.classList.remove('open'));
+  // Menú móvil
+  const menu = $('menu'), burger = $('burger');
+  burger.onclick = () => { const o = menu.classList.toggle('open'); burger.setAttribute('aria-expanded', o); };
+  menu.querySelectorAll('a').forEach(a => a.onclick = () => { menu.classList.remove('open'); burger.setAttribute('aria-expanded', false); });
 
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
-  }), { threshold: .12 });
-  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+  // Titular que se escribe solo
+  const words = ['diseñan.', 'calculan.', 'construyen.', 'innovan.'];
+  if (!reduce) {
+    let w = 0, n = words[0].length, dir = -1, hold = 18;
+    setInterval(() => {
+      if (dir === 1) { if (n < words[w].length) n++; else if (hold < 18) hold++; else { dir = -1; hold = 0; } }
+      else { if (n > 0) n--; else { dir = 1; w = (w + 1) % words.length; } }
+      $('typed').textContent = words[w].slice(0, n);
+    }, 85);
+  }
 
-  // Envía el formulario por correo (sin backend)
-  document.getElementById('form').onsubmit = e => {
-    e.preventDefault();
-    const d = Object.fromEntries(new FormData(e.target));
-    const body = `Nombre: ${d.nombre}\nTeléfono: ${d.telefono}\nCorreo: ${d.correo}\nServicio: ${d.servicio}\n\n${d.mensaje}`;
-    location.href = `mailto:contacto@mairumax.com?subject=${encodeURIComponent('Consulta web - ' + d.servicio)}&body=${encodeURIComponent(body)}`;
+  // Reloj
+  const tick = () => { let t; try { t = new Date().toLocaleTimeString('es-PE', { hour12: false, timeZone: 'America/Lima' }); } catch (e) { t = new Date().toLocaleTimeString(); } $('clock').textContent = t; };
+  tick(); setInterval(tick, 1000);
+
+  // Ticker
+  const tk = [['[ok]', 'var(--ok)', 'IA aplicada'], ['[ok]', 'var(--ok)', 'Innovación constante'], ['[ok]', 'var(--ok)', 'Calidad y optimización'], ['[ok]', 'var(--ok)', 'Construcción colectiva'], ['[run]', 'var(--accent-2)', 'Sociedad BIC: lucro + impacto'], ['[beta]', 'var(--warn)', 'PixPin Max en desarrollo'], ['[info]', 'var(--key)', 'hecho desde la obra y la oficina']];
+  [...tk, ...tk].forEach(([tag, c, t]) => { const s = el('span'); const b = el('span', { style: 'color:' + c }, tag); s.append(b, ' ' + t); $('ticker').append(s); });
+
+  // Terminal
+  const out = $('termOut');
+  const C = { cmd: 'var(--accent-2)', out: 'var(--soft)', ok: 'var(--ok)', dim: 'var(--dim)', err: 'var(--err)', star: 'var(--accent-2)' };
+  const print = (lines) => { lines.forEach(([c, t]) => out.append(el('div', { style: 'color:' + C[c] }, t))); while (out.children.length > 14) out.firstChild.remove(); };
+  const MISION = 'Crear herramientas tecnológicas e inteligentes de alta calidad que optimicen el trabajo de los profesionales y empresas del sector AEC, impulsando la innovación y fortaleciendo a la comunidad mediante la colaboración, la formación y las alianzas, de manera sostenible y rentable.';
+  const VISION = 'Ser la empresa líder en innovación tecnológica e inteligencia artificial aplicada al sector AEC en la región, reconocida por la calidad de sus herramientas y por haber impulsado el crecimiento de miles de profesionales, universidades y empresas del sector.';
+  const exec = (raw) => {
+    const c = String(raw || '').trim().toLowerCase().replace(/^mairumax\s+/, '');
+    if (c === 'clear') { out.replaceChildren(); return; }
+    if (!c) return;
+    const R = {
+      help: [['dim', 'comandos disponibles:'], ['out', '  productos   producto estrella: PixPin Max'], ['out', '  bandera     nuestra bandera'], ['out', '  principios  los 4 principios'], ['out', '  modelo      cómo funciona el modelo BIC'], ['out', '  mision      misión de la empresa'], ['out', '  vision      visión de la empresa'], ['out', '  unirme      únete a la comunidad'], ['out', '  clear       limpiar la terminal']],
+      productos: [['star', '★ PixPin Max  [beta · en desarrollo]'], ['out', '  captura y anota · planos .dwg · modelos 3D Revit/IFC'], ['out', '  terrenos LandXML · proyectos tipo chat · lecciones'], ['dim', '  Windows + Android · sin nube · baja a ./productos']],
+      bandera: [['ok', 'IA aplicada e innovación tecnológica para el sector AEC, con herramientas de alta calidad, alto nivel de optimización y diseñadas desde la práctica real de obra y oficina.']],
+      principios: [['out', '01  IA aplicada .............. problemas reales, no teoría'], ['out', '02  Innovación constante ..... investigación y mejora continua'], ['out', '03  Calidad y optimización ... precisas, rápidas, eficientes'], ['out', '04  Construcción colectiva ... la comunidad co-crea']],
+      modelo: [['out', '[1] los profesionales aportan'], ['out', '[2] los productos mejoran'], ['out', '[3] la empresa crece'], ['out', '[4] devolvemos valor al sector'], ['ok', '↺ y el ciclo vuelve a empezar']],
+      mision: [['ok', MISION]], vision: [['ok', VISION]],
+      unirme: [['ok', '¡Genial! Baja a la sección "Construyamos juntos" y deja tu correo.']],
+      sudo: [['star', 'aquí nadie es sudo: construimos en colectivo']]
+    };
+    const alias = { pixpin: 'productos', 'modelo-bic': 'modelo', 'misión': 'mision', 'visión': 'vision', join: 'unirme' };
+    print([['cmd', '$ ' + c], ...(R[alias[c] || c] || [['err', 'comando no encontrado: ' + c + ' — escribe help']])]);
   };
+  print([['dim', 'MAIRUMAX shell v1.0 — Sociedad BIC · sector AEC'], ['dim', 'escribe help o toca un comando ↓'], ['cmd', '$ whoami'], ['out', 'Una empresa BIC que crea herramientas con IA para el sector AEC, las mejora con su comunidad y le devuelve valor.']]);
+  $('termForm').onsubmit = (e) => { e.preventDefault(); exec($('termIn').value); $('termIn').value = ''; };
+  ['help', 'productos', 'bandera', 'principios', 'modelo', 'mision', 'vision', 'clear'].forEach(t => {
+    const b = el('button', { type: 'button', class: 'chip' }, t); b.onclick = () => exec(t); $('termChips').append(b);
+  });
+
+  // Producto: explorador de funciones
+  const F = [
+    { key: 'Ctrl Alt X', file: 'captura.png', img: 'img/captura-despues.png', alt: 'Captura de pantalla anotada en PixPin Max', t: 'Captura y anota al instante', d: 'Elige una zona, anótala con lápiz, flechas y texto, saca el texto con OCR o déjala flotando encima de todo.', est: 'Captura la diapositiva o el ejercicio de la clase y guárdalo en el proyecto del curso.', pro: 'Marca un detalle del plano o del correo y mándalo al proyecto de obra en un paso.' },
+    { key: '.dwg', file: 'plano.dwg', img: 'img/plano-dwg.png', alt: 'Plano de AutoCAD abierto en PixPin Max', t: 'Planos de AutoCAD sin AutoCAD', d: 'Abre el .dwg al instante: mide, marca, anota e imprime.', est: 'Revisa y anota los planos del curso aunque tu laptop no tenga AutoCAD.', pro: 'Consulta y marca planos en obra o en reunión, sin licencias ni equipos pesados.' },
+    { key: '.rvt · .ifc', file: 'modelo.ifc', img: 'img/modelo-caja-seccion.png', alt: 'Modelo 3D con caja de sección en PixPin Max', t: 'Modelos 3D de Revit e IFC', d: 'Gíralo con el ratón, córtalo con una caja de sección, recorre cada planta y mira lo que mide cada pieza.', est: 'Entiende el modelo BIM del proyecto del curso, planta por planta.', pro: 'Revisa el modelo con el cliente o en campo, cortándolo donde haga falta.' },
+    { key: 'LandXML', file: 'terreno.xml', img: 'img/civil-terreno.png', alt: 'Terreno con curvas de nivel en PixPin Max', t: 'Terrenos y carreteras', d: 'Abre LandXML o los puntos de Civil 3D con colores por altura y curvas de nivel.', est: 'Visualiza el levantamiento topográfico de tus prácticas de campo.', pro: 'Revisa superficies y alineamientos sin abrir Civil 3D.' },
+    { key: 'proyectos', file: 'proyectos', img: 'img/proyectos-oscuro.png', alt: 'Lista de proyectos en PixPin Max', t: 'Proyectos en forma de chat', d: 'Notas, fotos, audios, PDF, tablas y lienzos juntos por proyecto. Se sincroniza con Android por Wi‑Fi, sin nube.', est: 'Un proyecto por curso: la foto de la pizarra, el audio de la clase y el PDF, juntos.', pro: 'Un proyecto por obra, con todo lo que pasa ordenado por fecha.' },
+    { key: 'timeline', file: 'lecciones', img: 'img/timeline-lecciones.png', alt: 'Lecciones aprendidas en el timeline de PixPin Max', t: 'Timeline y lecciones aprendidas', d: 'Apunta lo que pasa minuto a minuto con voz, texto o foto, y convierte los errores en lecciones con repaso espaciado.', est: 'Repasa lo aprendido antes del examen con repaso espaciado.', pro: 'Registra incidencias de obra para que las lecciones no se olviden.' }
+  ];
+  F.forEach(f => { const i = new Image(); i.src = f.img; });
+  let fi = 0, aud = 'est';
+  const featBtns = F.map((f, i) => {
+    const b = el('button', { type: 'button', role: 'tab', 'aria-selected': i === 0 });
+    b.append(el('kbd', {}, f.key), el('span', {}, f.t));
+    b.onclick = () => { fi = i; renderFeat(true); };
+    $('featList').append(b); return b;
+  });
+  const renderFeat = (anim) => {
+    const f = F[fi];
+    featBtns.forEach((b, i) => b.setAttribute('aria-selected', i === fi));
+    $('featFile').textContent = 'PixPin Max — ' + f.file;
+    $('featImg').src = f.img; $('featImg').alt = f.alt;
+    $('featDesc').textContent = f.d;
+    $('featUse').textContent = f[aud];
+    $('audLabel').textContent = aud === 'pro' ? '✓ si ya trabajas en la industria' : '✓ si eres estudiante AEC';
+    if (anim) { retrigger($('featImg')); retrigger($('featCap')); }
+  };
+  $('audSeg').querySelectorAll('button').forEach(b => b.onclick = () => {
+    aud = b.dataset.aud;
+    $('audSeg').querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b));
+    renderFeat(true);
+  });
+  renderFeat(false);
+
+  // Principios como código
+  const COL = { k: 'var(--kw)', s: 'var(--str)', c: 'var(--dim)', f: 'var(--ok)', y: 'var(--key)', p: 'var(--text)', n: 'var(--accent-2)' };
+  const P = [
+    { n: '01', file: 'ia_aplicada.ts', dot: '#60A5FA', t: 'IA aplicada', d: 'Tecnología que resuelve problemas reales del sector y no solo se queda en la teoría.', x: 'Cada herramienta nace de una tarea concreta de obra u oficina, y se mide por el tiempo que te devuelve.', code: ['c:// Principio 01 — IA aplicada', 'k:export |k:const |f:iaAplicada |p:= {', 'p:  |y:resuelve|p:: |s:"problemas reales del sector"|p:,', 'p:  |y:hechaDesde|p:: [|s:"obra"|p:, |s:"oficina"|p:],', 'p:  |y:soloTeoria|p:: |n:false|p:,', 'p:};'] },
+    { n: '02', file: 'innovacion.py', dot: '#FBBF24', t: 'Innovación constante', d: 'Investigación y mejora continua de productos y procesos.', x: 'Versiones frecuentes, guiadas por lo que aprendemos en cada proyecto.', code: ['c:# Principio 02 — Innovación constante', 'k:while |p:producto.|f:en_uso|p:():', 'p:    |f:investigar|p:()', 'p:    |f:mejorar|p:(producto, procesos)', 'p:    |f:publicar|p:(nueva_version)'] },
+    { n: '03', file: 'calidad.rs', dot: '#FF6B1A', t: 'Calidad y optimización', d: 'Herramientas precisas, rápidas y que ahorran tiempo y costos.', x: 'Menos pasos, menos errores y resultados confiables para decidir.', code: ['c:// Principio 03 — Calidad y optimización', 'k:fn |f:herramienta|p:() -> |y:Resultado |p:{', 'p:    |f:precisa|p:()?.|f:rapida|p:()?', 'p:        .|f:ahorra|p:(|y:Tiempo|p:, |y:Costos|p:)', 'p:}'] },
+    { n: '04', file: 'colectiva.yml', dot: '#4ADE80', t: 'Construcción colectiva', d: 'La comunidad profesional participa en crear y mejorar las herramientas.', x: 'Proponer, probar y mejorar es parte del producto: tus aportes se convierten en funciones reales.', code: ['c:# Principio 04 — Construcción colectiva', 'y:comunidad|p::', 'p:  |y:participa_en|p:: [crear, probar, mejorar]', 'p:  |y:aportes|p:: |s:"se convierten en funciones reales"', 'p:  |y:rol|p:: |s:co-autora'] }
+  ];
+  const tabs = P.map((p, i) => {
+    const b = el('button', { type: 'button', role: 'tab', 'aria-selected': i === 0 });
+    b.append(el('i', { style: 'background:' + p.dot }), p.file);
+    b.onclick = () => renderP(i, true);
+    $('tabs').append(b); return b;
+  });
+  const renderP = (a, anim) => {
+    const p = P[a];
+    tabs.forEach((b, i) => b.setAttribute('aria-selected', i === a));
+    const code = $('code'); code.replaceChildren();
+    p.code.forEach((row, i) => {
+      const line = el('div'); line.append(el('span', { class: 'ln' }, i + 1));
+      const src = el('span', { class: 'src' });
+      row.split('|').forEach(seg => { const j = seg.indexOf(':'); src.append(el('span', { style: 'color:' + (COL[seg.slice(0, j)] || COL.p) }, seg.slice(j + 1))); });
+      line.append(src); code.append(line);
+    });
+    $('prN').textContent = '// EN LENGUAJE HUMANO · ' + p.n + '/04';
+    $('prT').textContent = p.t; $('prD').textContent = p.d; $('prX').textContent = p.x;
+    if (anim) retrigger($('editorBody'));
+  };
+  renderP(0, false);
+
+  // Pipeline del modelo BIC
+  const S = [
+    { n: '01', t: 'Los profesionales aportan', fn: 'comunidad.aporta()', ok: 'ideas y feedback de obra y oficina', d: 'Ingenieros, arquitectos y constructores usan las herramientas y comparten lo que necesitan en su día a día.' },
+    { n: '02', t: 'Los productos mejoran', fn: 'producto.mejora()', ok: 'más precisión, menos pasos', d: 'Cada aporte se convierte en mejoras concretas: más precisión, más rapidez y menos pasos.' },
+    { n: '03', t: 'La empresa crece', fn: 'empresa.crece()', ok: 'ingresos sostenibles y rentables', d: 'Herramientas de alta calidad generan ingresos sostenibles y rentables.' },
+    { n: '04', t: 'Devolvemos valor', fn: 'sector.recibe_valor()', ok: 'formación, alianzas y apoyo', d: 'Los resultados financian formación, alianzas con universidades y más apoyo al sector, que vuelve a fortalecer a la comunidad.' }
+  ];
+  let stage = 0, running = false, cycles = 0, pick = 0, timer;
+  const stageEls = S.map((s, i) => {
+    const b = el('button', { type: 'button', class: 'stage' });
+    const top = el('span', { class: 'top' }); top.append(el('span', {}, 'stage ' + s.n), el('span', { class: 'st' }, '○ idle'));
+    b.append(top, el('strong', {}, s.t), el('code', {}, s.fn));
+    b.onclick = () => { if (!running) { pick = i; renderPipe(); } };
+    $('stages').append(b); return b;
+  });
+  const renderPipe = () => {
+    stageEls.forEach((b, i) => {
+      const done = i < stage, live = running && i === stage;
+      b.className = 'stage' + (done ? ' done' : live ? ' live' : i === pick ? ' sel' : '');
+      b.querySelector('.st').textContent = done ? '✓ done' : live ? '● running' : '○ idle';
+    });
+    $('prog').style.width = (stage / 4 * 100) + '%';
+    const s = S[Math.min(pick, 3)];
+    const info = $('info'); info.replaceChildren(
+      el('div', { class: 'mono', style: 'font-size:12px;color:var(--accent-2);letter-spacing:.06em' }, 'STAGE ' + s.n + ' / 04'),
+      el('h3', {}, s.t), el('p', {}, s.d));
+    $('cycles').textContent = cycles;
+    const btn = $('runBtn'); btn.disabled = running; btn.textContent = running ? '● ejecutando…' : '▶ run ciclo';
+  };
+  const logLine = (t, c) => $('log').append(el('div', { style: 'color:' + c }, t));
+  $('runBtn').onclick = () => {
+    if (running) return;
+    running = true; stage = 0; pick = 0;
+    const n = cycles + 1;
+    $('log').replaceChildren(); logLine('$ mairumax run ciclo --bic  (#' + n + ')', 'var(--accent-2)');
+    renderPipe();
+    timer = setInterval(() => {
+      logLine('[ok] ' + S[stage].fn + '  → ' + S[stage].ok, 'var(--ok)');
+      if (stage >= 3) {
+        clearInterval(timer); stage = 4; running = false; cycles = n;
+        logLine('✓ ciclo #' + n + ' completo: la comunidad crece y todo vuelve a empezar', 'var(--str)');
+      } else { stage++; pick = stage; }
+      renderPipe();
+    }, 1000);
+  };
+  renderPipe();
+
+  // Manifiesto
+  document.querySelectorAll('.json button').forEach(b => b.onclick = () => {
+    const open = b.getAttribute('aria-expanded') !== 'true';
+    b.setAttribute('aria-expanded', open);
+    $(b.getAttribute('aria-controls')).hidden = !open;
+  });
+
+  // Roles
+  const R = [
+    { id: 'profesional', t: 'Profesionales', h: 'Herramientas que trabajan como tú, pensadas desde la práctica real de obra y oficina, y un espacio para proponer mejoras.', items: ['ahorro de tiempo y costos en tareas repetitivas', 'acceso anticipado para probar y opinar', 'formación en IA aplicada al sector'] },
+    { id: 'estudiante', t: 'Estudiantes', h: 'Las herramientas que te acompañan durante la carrera y te preparan para trabajar con IA en el sector.', items: ['PixPin Max para apuntes, planos y modelos', 'acceso anticipado a nuevas herramientas', 'comunidad para aprender y proponer'] },
+    { id: 'universidad', t: 'Universidades', h: 'Alianzas de formación e investigación para que la próxima generación del sector llegue preparada para la IA.', items: ['programas de formación conjunta', 'investigación aplicada con casos reales', 'herramientas para estudiantes'] },
+    { id: 'empresa', t: 'Empresas', h: 'Procesos más precisos y optimizados, con soluciones que evolucionan junto a las necesidades reales de cada proyecto.', items: ['herramientas de alta calidad y alto rendimiento', 'mejora continua basada en uso real', 'una alianza con propósito de impacto'] }
+  ];
+  const roleBtns = R.map((r, i) => {
+    const b = el('button', { type: 'button', role: 'tab', 'aria-selected': i === 0 }, '--rol=' + r.id);
+    b.onclick = () => renderRole(i, true);
+    $('roles').append(b); return b;
+  });
+  const renderRole = (ri, anim) => {
+    const r = R[ri];
+    roleBtns.forEach((b, i) => b.setAttribute('aria-selected', i === ri));
+    $('roleT').textContent = r.t; $('roleH').textContent = r.h;
+    const lg = $('roleLog'); lg.replaceChildren(el('div', { style: 'color:var(--dim)' }, 'instalando beneficios para ' + r.id + '…'));
+    r.items.forEach(it => { const d = el('div'); d.append(el('span', { style: 'color:var(--ok)' }, '[✓] '), it); lg.append(d); });
+    lg.append(el('div', { style: 'color:var(--accent-2)' }, 'listo. bienvenido/a a la comunidad.'));
+    if (anim) retrigger($('roleBody'));
+  };
+  renderRole(0, false);
+
+  // Únete
+  $('joinForm').onsubmit = (e) => {
+    e.preventDefault();
+    const v = $('joinMail').value.trim(), msg = $('joinMsg');
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    msg.style.color = ok ? 'var(--ok)' : 'var(--err)';
+    msg.textContent = ok ? '[ok] ¡Gracias! Anotamos ' + v + '. Si quieres escribirnos: contacto@mairumax.com' : '[error] escribe un correo válido, ej. nombre@empresa.com';
+  };
+})();
 </script>
 </body>
 </html>
