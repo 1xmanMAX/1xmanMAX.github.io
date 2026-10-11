@@ -332,7 +332,7 @@ footer .wrap{padding-block:32px 48px;display:flex;flex-wrap:wrap;gap:16px;justif
           <a class="btn btn-main" href="pixpin.html">Ver tutorial completo →</a>
           <a class="btn" style="border:1.5px solid var(--accent);color:var(--accent-2)" href="https://github.com/1xmanMAX/PIXPIN_PRO_WINDOWS/releases" target="_blank" rel="noopener">Probar beta · Windows</a>
           <a class="btn" style="border:1.5px solid var(--accent);color:var(--accent-2)" href="https://github.com/1xmanMAX/PIXPIN_PRO_ANDROID/releases/latest" target="_blank" rel="noopener">Probar beta · Android</a>
-          <a class="btn" style="border:1px solid var(--line-2);color:var(--muted);font-weight:500" href="pixpin.html#mejorar">Ayúdanos a mejorarla</a>
+          <a class="btn" style="border:1px solid var(--line-2);color:var(--muted);font-weight:500" href="pixpin.html#mejorar">Dejar un comentario (sin cuenta)</a>
         </div>
       </div>
       <div class="soon">
@@ -681,12 +681,22 @@ footer .wrap{padding-block:32px 48px;display:flex;flex-wrap:wrap;gap:16px;justif
   renderRole(0, false);
 
   // Únete
-  $('joinForm').onsubmit = (e) => {
+  $('joinForm').onsubmit = async (e) => {
     e.preventDefault();
-    const v = $('joinMail').value.trim(), msg = $('joinMsg');
-    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-    msg.style.color = ok ? 'var(--ok)' : 'var(--err)';
-    msg.textContent = ok ? '[ok] ¡Gracias! Anotamos ' + v + '. Si quieres escribirnos: contacto@mairumax.com' : '[error] escribe un correo válido, ej. nombre@empresa.com';
+    const v = $('joinMail').value.trim(), msg = $('joinMsg'), btn = $('joinForm').querySelector('button');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { msg.style.color = 'var(--err)'; msg.textContent = '[error] escribe un correo válido, ej. nombre@empresa.com'; return; }
+    btn.disabled = true; msg.style.color = 'var(--dim)'; msg.textContent = 'enviando…';
+    try {
+      const r = await fetch('https://formsubmit.co/ajax/max.antony.8.5.1@gmail.com', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ _subject: 'MAIRUMAX · Nueva persona en la comunidad', _template: 'table', _captcha: 'false', email: v, Correo: v, Página: 'mairumax.me' }) });
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || String(j.success) !== 'true') throw new Error();
+      msg.style.color = 'var(--ok)'; msg.textContent = '[ok] ¡Bienvenido/a! Te escribiremos a ' + v;
+      $('joinMail').value = '';
+    } catch (err) {
+      msg.style.color = 'var(--err)'; msg.textContent = '[error] no se pudo enviar. Inténtalo otra vez en un momento.';
+    }
+    btn.disabled = false;
   };
 })();
 </script>
