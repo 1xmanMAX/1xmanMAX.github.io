@@ -1,0 +1,616 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tutorial PixPin Max</title>
+<meta name="description" content="Tutorial completo de PixPin Max para Windows y Android: todas las funciones, paso a paso, y cómo ayudar a mejorarla.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: documentación tipo terminal; índice fijo a la izquierda, capítulos a la derecha. */
+:root{
+  color-scheme:dark;
+  --bg:#0A0F1A; --bg-2:#0C1220; --panel:#0F1626; --term:#0B111D; --deep:#080D17;
+  --line:#1E2A40; --line-2:#2A3A56;
+  --text:#E8EEF6; --soft:#C3CEDC; --muted:#A9B6C8; --dim:#7C8BA1; --faint:#5B6B84;
+  --accent:#FF6B1A; --accent-2:#FF8A3D; --accent-3:#FFB37A; --on-accent:#1A0B00;
+  --ok:#4ADE80; --warn:#FBBF24; --err:#F87171; --key:#93C5FD; --paper:#F4F2EE;
+  --f-display:"Space Grotesk",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--f-body);line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:var(--f-display);letter-spacing:-.03em;line-height:1.08;text-wrap:balance;margin:0}
+p{margin:0}
+a{color:var(--accent-2)}a:hover{color:var(--accent-3)}
+button,select,input,textarea{font:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+img{max-width:100%}
+kbd{font-family:var(--f-mono);font-size:.82em;padding:1px 7px;border-radius:6px;border:1px solid var(--line-2);border-bottom-width:2px;background:var(--deep);color:var(--accent-3);white-space:nowrap}
+b{color:var(--text);font-weight:600}
+.wrap{max-width:1320px;margin:0 auto;padding-inline:24px}
+.mono{font-family:var(--f-mono)}
+.bp{background-image:linear-gradient(rgba(96,165,250,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(96,165,250,.06) 1px,transparent 1px);background-size:40px 40px}
+.cmd{font-family:var(--f-mono);font-size:14px;color:var(--dim)}
+.cmd::before{content:"❯ ";color:var(--accent)}
+.tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-mono);font-size:12px;padding:4px 10px;border-radius:6px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;border:1px solid var(--line-2);background:transparent;color:var(--text);transition:border-color .15s ease,color .15s ease,background-color .15s ease}
+.btn:hover{border-color:var(--accent);color:var(--accent-3)}
+.btn-main{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn-main:hover{color:var(--on-accent);background:var(--accent-2)}
+
+/* NAV */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rgba(10,15,26,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav{height:64px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-family:var(--f-mono)}
+.logo{display:flex;align-items:center;gap:10px;color:var(--text);text-decoration:none;font-weight:700;font-size:17px}
+.logo:hover{color:var(--text)}
+.logo small{color:var(--dim);font-size:inherit}
+.nav-links{display:flex;gap:8px;align-items:center;font-size:14px}
+.nav-links a{color:var(--muted);text-decoration:none;padding:8px 12px;border-radius:8px}
+.nav-links a:hover{color:var(--accent-3)}
+@media (max-width:640px){.nav-links .hide-sm{display:none}}
+
+/* HERO */
+.hero{padding-block:72px 48px;border-bottom:1px solid var(--line)}
+.hero h1{font-size:clamp(38px,5.6vw,72px);letter-spacing:-.04em;margin:18px 0 16px}
+.hero h1 span{color:var(--accent)}
+.hero .lead{font-size:19px;color:var(--soft);max-width:720px}
+.hero-grid{display:flex;flex-wrap:wrap;gap:32px;align-items:end;justify-content:space-between}
+.hero-grid>*{min-width:0}
+.progress-card{flex:0 1 380px;border:1px solid var(--line-2);border-radius:14px;background:var(--term);padding:18px 20px;font-family:var(--f-mono);font-size:13px}
+.bar{height:8px;border-radius:8px;background:var(--line);overflow:hidden;margin:10px 0 8px}
+.bar div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--warn));transition:width .4s ease}
+.tools{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px;align-items:center}
+.seg{display:inline-flex;padding:5px;border-radius:12px;border:1px solid var(--line-2);background:var(--term);gap:4px}
+.seg button{min-height:40px;padding:0 16px;border-radius:8px;border:0;background:transparent;color:var(--muted);font-family:var(--f-mono);font-weight:700;font-size:13px}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.search{flex:1 1 280px;display:flex;align-items:center;gap:10px;min-height:50px;padding:0 16px;border-radius:12px;border:1px solid var(--line-2);background:var(--deep);font-family:var(--f-mono);font-size:14px}
+.search label{color:var(--accent);white-space:nowrap}
+.search input{flex:1;min-width:0;border:0;outline:none;background:transparent;color:var(--text);caret-color:var(--accent)}
+.search input::placeholder{color:var(--faint)}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:290px minmax(0,1fr);gap:40px;padding-block:48px 96px}
+.side{position:sticky;top:84px;align-self:start;max-height:calc(100vh - 100px);overflow:auto;padding-right:6px}
+.side details{border:1px solid var(--line);border-radius:14px;background:var(--term)}
+.side summary{list-style:none;cursor:pointer;padding:14px 16px;font-family:var(--f-mono);font-size:13px;color:var(--muted);display:flex;justify-content:space-between}
+.side summary::-webkit-details-marker{display:none}
+.toc{padding:0 8px 12px;display:flex;flex-direction:column;gap:2px}
+.toc h4{margin:14px 8px 6px;font-family:var(--f-mono);font-size:11px;letter-spacing:.12em;color:var(--dim);font-weight:500}
+.toc a{display:flex;align-items:center;gap:10px;padding:7px 8px;border-radius:8px;color:var(--muted);text-decoration:none;font-size:14px;line-height:1.3}
+.toc a:hover{background:var(--panel);color:var(--text)}
+.toc a.on{background:rgba(255,107,26,.1);color:var(--accent-3)}
+.toc .chk{flex:none;width:16px;height:16px;border-radius:5px;border:1.5px solid var(--line-2);display:grid;place-items:center;font-size:10px;color:var(--on-accent)}
+.toc a.done .chk{background:var(--ok);border-color:var(--ok)}
+.toc a[hidden]{display:none}
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr;gap:24px}
+  .side{position:static;max-height:none;padding-right:0}
+}
+
+/* CHAPTERS */
+.chapters{display:flex;flex-direction:column;gap:28px;min-width:0}
+.group-title{display:flex;align-items:center;gap:14px;margin-top:20px;font-family:var(--f-mono);font-size:13px;color:var(--dim);letter-spacing:.1em}
+.group-title::after{content:"";flex:1;border-top:1px dashed var(--line-2)}
+.ch{border:1px solid var(--line);border-radius:18px;background:var(--panel);overflow:hidden;scroll-margin-top:84px}
+.ch.done{border-color:#2F6B4A}
+.ch-head{padding:26px 28px 0;display:flex;flex-direction:column;gap:12px}
+.ch-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-family:var(--f-mono);font-size:12px;color:var(--dim)}
+.plat-win{color:var(--key);border:1px solid rgba(147,197,253,.35);background:rgba(147,197,253,.06)}
+.plat-and{color:var(--ok);border:1px solid rgba(74,222,128,.35);background:rgba(74,222,128,.06)}
+.plat-all{color:var(--accent-3);border:1px solid rgba(255,138,61,.35);background:rgba(255,138,61,.06)}
+.ch h2{font-size:clamp(26px,2.8vw,34px)}
+.ch .sum{color:var(--soft);font-size:17px;max-width:820px}
+.ch-body{padding:22px 28px 28px;display:flex;flex-direction:column;gap:22px}
+.blk-title{font-family:var(--f-mono);font-size:12px;letter-spacing:.1em;color:var(--accent-2);margin-bottom:10px}
+.steps{list-style:none;margin:0;padding:0;counter-reset:s;display:flex;flex-direction:column;gap:10px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;color:var(--soft)}
+.steps li::before{content:counter(s);width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--deep);border:1px solid var(--line-2);font-family:var(--f-mono);font-size:12px;color:var(--accent-2);margin-top:1px}
+.feats{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.feats li{padding:12px 14px;border-radius:10px;border:1px solid var(--line);background:var(--term);color:var(--soft);font-size:15px}
+.keys-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+.keys{width:100%;border-collapse:collapse;font-size:14px}
+.keys td{padding:10px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--soft)}
+.keys tr:first-child td{border-top:0}
+.keys td:first-child{white-space:nowrap;width:1%;}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+figure{margin:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#070B13}
+figure button{display:block;width:100%;padding:0;border:0;background:transparent;cursor:zoom-in}
+figure img{display:block;width:100%;height:auto;max-height:420px;object-fit:contain}
+figure.svg{background:var(--paper)}
+figure.svg img{padding:10px}
+figcaption{padding:10px 14px;font-size:13px;color:var(--dim);border-top:1px solid var(--line);background:var(--term)}
+.tip{display:flex;gap:12px;padding:14px 16px;border-radius:12px;border:1px dashed var(--line-2);color:var(--muted);font-size:15px}
+.tip .mono{flex:none;color:var(--warn);font-size:12px;padding-top:3px}
+.ch-foot{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:16px 28px;border-top:1px solid var(--line);background:var(--term)}
+.learn{display:inline-flex;align-items:center;gap:10px;min-height:44px;padding:0 16px;border-radius:10px;border:1.5px solid var(--line-2);background:transparent;color:var(--muted);font-family:var(--f-mono);font-size:13px;font-weight:700}
+.learn .box{width:18px;height:18px;border-radius:5px;border:1.5px solid currentColor;display:grid;place-items:center;font-size:11px}
+.learn[aria-pressed="true"]{border-color:var(--ok);color:var(--ok);background:rgba(74,222,128,.06)}
+.learn[aria-pressed="true"] .box{background:var(--ok);color:var(--on-accent)}
+.improve{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--dim)}
+.improve .btn{min-height:40px;font-size:13px}
+.empty{padding:40px;text-align:center;border:1px dashed var(--line-2);border-radius:16px;color:var(--muted)}
+
+/* MEJORAR */
+.better{border:1px solid var(--accent);border-radius:20px;background:var(--term);padding:clamp(24px,4vw,44px);display:flex;flex-direction:column;gap:28px;scroll-margin-top:84px}
+.better h2{font-size:clamp(30px,3.6vw,46px)}
+.ways{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.way{border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:20px;display:flex;flex-direction:column;gap:8px}
+.way .mono{font-size:12px;color:var(--accent-2)}
+.way h3{font-size:20px}
+.way p{color:var(--muted);font-size:15px}
+.builder{display:flex;flex-wrap:wrap;gap:24px}
+.builder>*{flex:1 1 380px;min-width:0}
+.form{display:flex;flex-direction:column;gap:14px}
+.form .row{display:flex;flex-wrap:wrap;gap:12px}
+.form .row>label{flex:1 1 160px}
+.form label{display:flex;flex-direction:column;gap:6px;font-family:var(--f-mono);font-size:12px;color:var(--dim)}
+.form select,.form textarea,.form input{width:100%;min-height:46px;padding:10px 12px;border-radius:10px;border:1px solid var(--line-2);background:var(--deep);color:var(--text);outline:none}
+.form select:focus,.form textarea:focus,.form input:focus{border-color:var(--accent)}
+.form textarea{min-height:120px;resize:vertical;font-family:var(--f-body)}
+.preview{border:1px solid var(--line);border-radius:14px;background:var(--deep);padding:18px;font-family:var(--f-mono);font-size:13px;line-height:1.7;color:var(--soft);white-space:pre-wrap;word-break:break-word;overflow:auto;max-height:360px}
+.needs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.needs li{padding:14px 16px;border-radius:12px;border:1px solid var(--line);background:var(--panel);font-size:15px;color:var(--soft)}
+.needs li .mono{display:block;font-size:11px;color:var(--warn);margin-bottom:4px;letter-spacing:.08em}
+
+footer{border-top:1px solid var(--line)}
+footer .wrap{padding-block:32px;display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;color:#8C9AB0;font-size:14px}
+
+dialog{border:1px solid var(--line-2);border-radius:14px;background:var(--deep);padding:0;max-width:min(1200px,94vw);max-height:92vh;color:var(--text)}
+dialog::backdrop{background:rgba(4,7,12,.85)}
+dialog img{display:block;max-width:100%;max-height:82vh;margin:auto}
+dialog .dbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+dialog.svg img{background:var(--paper);padding:12px}
+
+@media (max-width:560px){
+  .wrap{padding-inline:16px}
+  .ch-head{padding:20px 18px 0}.ch-body{padding:18px}.ch-foot{padding:14px 18px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="logo" aria-label="Volver a MAIRUMAX">
+      <svg width="28" height="28" viewBox="0 0 30 30" aria-hidden="true"><rect x=".5" y=".5" width="29" height="29" rx="7" fill="#FF6B1A"/><path d="M8 20 L13 15 L8 10" fill="none" stroke="#1A0B00" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 21 H22" stroke="#1A0B00" stroke-width="2.6" stroke-linecap="round"/></svg>
+      <span><small>~/mairumax/</small>pixpin</span>
+    </a>
+    <nav class="nav-links" aria-label="Atajos">
+      <a href="index.html#productos" class="hide-sm">← mairumax.me</a>
+      <a href="#mejorar" class="btn btn-main" style="min-height:40px">Ayúdanos a mejorar</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero bp">
+  <div class="wrap">
+    <div class="cmd">pixpin tutorial --completo</div>
+    <div class="hero-grid">
+      <div style="flex:1 1 560px">
+        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:18px">
+          <span class="tag plat-win">Windows 10/11</span>
+          <span class="tag plat-and">Android 10+</span>
+          <span class="tag" style="color:var(--warn);border:1px solid rgba(251,191,36,.45);background:rgba(251,191,36,.08)">EN DESARROLLO · BETA</span>
+        </div>
+        <h1>Tutorial de PixPin <span>Max</span></h1>
+        <p class="lead">Todas las funciones de la app, paso a paso: capturar, pinear, ordenar por proyectos, abrir planos y modelos 3D, dictar, sincronizar y mucho más. Marca cada capítulo cuando lo domines y, si algo falta o falla, cuéntanoslo: así mejoramos la app entre todos.</p>
+      </div>
+      <div class="progress-card" aria-live="polite">
+        <div style="display:flex;justify-content:space-between;color:var(--muted)"><span>tu progreso</span><span id="pct">0%</span></div>
+        <div class="bar"><div id="bar"></div></div>
+        <div style="color:var(--dim)" id="progTxt">0 de 0 capítulos aprendidos</div>
+      </div>
+    </div>
+    <div class="tools">
+      <div class="seg" role="group" aria-label="Plataforma" id="plat">
+        <button type="button" aria-pressed="true" data-p="all">Todo</button>
+        <button type="button" aria-pressed="false" data-p="win">Windows</button>
+        <button type="button" aria-pressed="false" data-p="and">Android</button>
+      </div>
+      <div class="search">
+        <label for="q">❯ buscar</label>
+        <input id="q" type="search" placeholder="ej. medir, dwg, voz, sincronizar…" autocomplete="off">
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap layout">
+  <aside class="side">
+    <details id="tocBox" open>
+      <summary><span>índice del tutorial</span><span id="tocCount"></span></summary>
+      <nav class="toc" id="toc" aria-label="Capítulos"></nav>
+    </details>
+  </aside>
+
+  <div class="chapters" id="chapters">
+    <!-- capítulos generados desde DATA -->
+  </div>
+</div>
+
+<section class="wrap" style="padding-bottom:96px">
+  <div class="better" id="mejorar">
+    <div>
+      <div class="cmd">pixpin contribuir</div>
+      <h2 style="margin-top:12px">Ayúdanos a mejorar PixPin Max</h2>
+      <p style="color:var(--soft);font-size:18px;max-width:760px;margin-top:12px">PixPin Max está en desarrollo y crece con lo que cuentan quienes la usan. Cada idea, cada fallo reportado y cada prueba en un equipo distinto hace la app mejor para todo el sector. Así funciona la construcción colectiva.</p>
+    </div>
+
+    <div class="ways">
+      <div class="way"><span class="mono">01 · prueba</span><h3>Úsala en tu día a día</h3><p>En clase, en la oficina o en obra. Los problemas reales aparecen con el uso real.</p></div>
+      <div class="way"><span class="mono">02 · cuenta</span><h3>Reporta lo que falla</h3><p>Di qué hiciste, qué esperabas y qué pasó. Con el modelo de tu equipo y una captura, mejor.</p></div>
+      <div class="way"><span class="mono">03 · propone</span><h3>Pide lo que te falta</h3><p>¿Una herramienta, un formato, un atajo? Explica para qué lo usarías en tu carrera o tu obra.</p></div>
+      <div class="way"><span class="mono">04 · vota y aporta</span><h3>Apoya otras ideas</h3><p>Reacciona con un pulgar a las propuestas que también quieres. Si programas, los pull requests son bienvenidos.</p></div>
+    </div>
+
+    <div class="builder">
+      <form class="form" id="fb" novalidate>
+        <div class="blk-title">ARMA TU REPORTE · SE ABRE EN GITHUB LISTO PARA ENVIAR</div>
+        <div class="row">
+          <label for="fbApp">app
+            <select id="fbApp"><option value="win">PixPin Max · Windows</option><option value="and">PixPin · Android</option></select>
+          </label>
+          <label for="fbType">tipo
+            <select id="fbType"><option value="Mejora">Propuesta de mejora</option><option value="Fallo">Reportar un fallo</option><option value="Idea">Idea nueva</option></select>
+          </label>
+        </div>
+        <label for="fbFn">función
+          <select id="fbFn"></select>
+        </label>
+        <label for="fbTitle">título corto
+          <input id="fbTitle" placeholder="ej. Medir áreas en el plano DWG">
+        </label>
+        <label for="fbText">cuéntanos
+          <textarea id="fbText" placeholder="Qué necesitas o qué pasó, y para qué lo usas (curso, oficina, obra…)."></textarea>
+        </label>
+        <label for="fbDev">tu equipo (opcional)
+          <input id="fbDev" placeholder="ej. Windows 11, i5, 8 GB · o el modelo de tu móvil">
+        </label>
+        <div style="display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+          <a class="btn btn-main" id="fbGo" href="https://github.com/1xmanMAX/PIXPIN_PRO_WINDOWS/issues/new" target="_blank" rel="noopener">Abrir en GitHub →</a>
+          <span class="mono" style="font-size:12px;color:var(--dim)">necesitas una cuenta gratuita de GitHub</span>
+        </div>
+      </form>
+      <div>
+        <div class="blk-title">VISTA PREVIA</div>
+        <div class="preview" id="fbPrev" aria-live="polite"></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="blk-title">DÓNDE MÁS AYUDA HACE FALTA AHORA</div>
+      <ul class="needs">
+        <li><span class="mono">PROBAR EN MÓVILES</span>Lo más reciente de Android tiene pruebas automáticas, pero falta verlo en teléfonos reales. Cuéntanos cómo va en el tuyo.</li>
+        <li><span class="mono">EDITAR PDF</span>Próxima meta: devolver la página anotada al PDF original conservando su texto.</li>
+        <li><span class="mono">REVIT ANTIGUO</span>Los archivos de Revit 2022 y anteriores todavía no abren en Windows. Si los usas, avísanos.</li>
+        <li><span class="mono">OCR EN ANDROID</span>En el móvil aún no se saca el texto de las capturas. ¿Te serviría? Dinos para qué.</li>
+        <li><span class="mono">CAPTURA CON SCROLL</span>Puede fallar con cabeceras fijas. Si te pasa, comparte en qué app o página.</li>
+        <li><span class="mono">TU FLUJO DE TRABAJO</span>¿Qué haces en la carrera o en obra que PixPin aún no resuelve? Esas ideas marcan el camino.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><b>MAIRUMAX</b> · PixPin Max es una implementación personal e independiente; el nombre PixPin pertenece a DepthPixel.</span>
+    <span><a href="index.html">mairumax.me</a> · Lima, Perú</span>
+  </div>
+</footer>
+
+<dialog id="zoom" aria-label="Imagen ampliada">
+  <div class="dbar"><span id="zoomCap"></span><button type="button" class="btn" id="zoomClose" style="min-height:36px">Cerrar · Esc</button></div>
+  <img id="zoomImg" alt="">
+</dialog>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  // **negrita** y `tecla`
+  const md = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/`(.+?)`/g, '<kbd>$1</kbd>');
+  const REPO = { win: 'https://github.com/1xmanMAX/PIXPIN_PRO_WINDOWS', and: 'https://github.com/1xmanMAX/PIXPIN_PRO_ANDROID' };
+
+  const DATA = [
+    { id: 'empezar-windows', p: 'win', t: 'Instalar PixPin Max en Windows', s: 'En tres pasos la tienes en la bandeja, lista para capturar. Funciona en Windows 10 (21H2) y 11, y va fluida incluso en un Core i3 de 3.ª generación con 4 GB.',
+      steps: ['Descarga el ZIP de la última versión en **Releases** de GitHub.', 'Descomprímelo y abre `pixpinmax.exe`. Se queda en la bandeja del sistema y arranca con Windows.', 'Opcional: en **Ajustes de Windows → Apps predeterminadas** elige PixPin para fotos, vídeos y audios. Así se abren como ventanas flotantes en unos 200 ms.'],
+      tip: '**Modo portable**: si junto a `pixpinmax.exe` pones un archivo `pixpinmax.toml`, todo se guarda en esa carpeta y nada en el registro. Puedes llevarla en un USB.',
+      link: ['Descargar para Windows', 'https://github.com/1xmanMAX/PIXPIN_PRO_WINDOWS/releases'] },
+
+    { id: 'capturar', p: 'win', t: 'Capturar la pantalla', s: 'Un solo atajo abre la captura. Abajo sale una barra con cada modo y su letra, así no tienes que memorizar nada.',
+      steps: ['Pulsa `Ctrl Alt X` o usa el icono de la bandeja.', 'Elige el modo con su letra: zona, ventana, pantalla, con scroll, GIF, pin en vivo o texto.', 'Marca la zona. Puedes teclear el ancho × alto exacto, usar proporciones **16:9 · 4:3 · 1:1** o repetir la última zona con `R`.', 'Anota encima sin abrir otra ventana: lápiz, flecha, rectángulo, texto y mosaico con `1`–`5`.', 'Decide qué hacer: copiar, pinear, mandar al chat de un proyecto, sacar el texto o guardar.'],
+      keys: [['`Z` `V` `P`', 'Zona, ventana (resalta la ventana bajo el ratón) y pantalla completa'], ['`S` `G`', 'Captura con scroll y grabar GIF'], ['`L` `T`', 'Pin en vivo y texto con OCR'], ['`C`', 'Copia el color de la lupa en HEX y RGB'], ['`Enter`', 'Copiar al portapapeles'], ['`Ctrl P`', 'Pinear: queda flotando encima de todo'], ['`Ctrl M`', 'Al chat: eliges el proyecto con buscador y teclas 1–6'], ['`Ctrl T` `Ctrl S`', 'Sacar el texto (OCR de Windows) · guardar en la galería'], ['`Alt` + arrastrar', 'En cualquier sitio: izquierdo copia, derecho pinea, central saca un pin en vivo'], ['`Alt` + doble clic central', 'Abre el anotador de pantalla']],
+      figs: [['captura-elegir.png', 'Elegir la zona, con la barra de modos abajo'], ['captura-despues.png', 'Después de elegir: anotar y decidir qué hacer']] },
+
+    { id: 'pines', p: 'win', t: 'Pines flotantes', s: 'Todo lo que pineas queda siempre encima: fotos, vídeos, PDF, notas, listas de tareas, herramientas como contador, ruleta o gastos, y pines en vivo que copian una zona de la pantalla en tiempo real.',
+      steps: ['Pinea algo: `Ctrl P` tras capturar, `Alt` + arrastrar con el botón derecho, o abre un archivo con PixPin.', 'Pasa el ratón por encima: sale la barra con su control propio (zoom, página, reproducir…), Copiar, Anotar y Más.', 'Cambia la opacidad del 20 al 100 % con `Mayús` + rueda. Al moverlo salen guías azules y un imán suave para alinear.', 'Usa el **pin en vivo** para vigilar otra ventana: se marca con un recuadro azul que no sale en ninguna captura y puedes manejar la zona a distancia desde el pin.', 'Abre **Pines abiertos** para encontrar los ocultos, agrupados por color, o cerrar todos con deshacer.'],
+      keys: [['`A`', 'Anotar encima del pin'], ['`Ctrl C`', 'Copiar (si tiene dibujo, sale fusionado)'], ['`Ctrl 0`', 'Volver al tamaño original'], ['`Ctrl T`', 'Dejar pasar el clic a lo que hay debajo'], ['`Espacio` `M`', 'Pausa y silencio en un vídeo'], ['`Ctrl 2`', 'Ocultar o mostrar todos los pines']],
+      figs: [['pin-barra.png', 'La barra común al pasar el ratón'], ['pines-abiertos.png', 'Panel «Pines abiertos»'], ['pin-tareas.png', 'Una lista de tareas como pin']] },
+
+    { id: 'proyectos-chat', p: 'win', t: 'Proyectos en forma de chat', s: 'Cada proyecto es un chat, como en el móvil: notas, fotos con descripción, notas de voz, documentos, PDF, tablas y lienzos, juntos y ordenados por fecha.',
+      steps: ['Crea un proyecto por curso o por obra.', 'Pulsa **Adjuntar**: sale una cuadrícula con buscador y teclas `1`–`8` (foto o vídeo, archivo, lienzo, nota, lista de tareas, tabla, conversación y captura).', 'Envía varias fotos a la vez con su descripción; reordénalas arrastrando y quítalas con ✕.', 'Abre el menú de cualquier mensaje para responder, pinear, anotar, reenviar o convertirlo en lección. Ponle etiquetas ⭐ ✅ ⏳ 💡 💰 📍 para encontrarlo luego.', 'Cambia el nombre de cualquier archivo o audio con `F2`.'],
+      feats: ['**PDF**: entra como un mensaje y sus páginas son hojas que se anotan como lienzos, con marcadores, búsqueda y fusión.', '**Documentos**: Word, EPUB, HTML, Markdown y texto se leen dentro. PowerPoint se presenta a pantalla completa y Excel entra como tablas que calculan.', '**Voz**: notas de voz, transcripción con Whisper, teleprónter, pronunciar y conversación por turnos.', '**Menos usado**, bajo Adjuntar: cronómetro, ruleta, gastos, traer del móvil…'],
+      keys: [['`R` `P` `A`', 'Responder, pinear y anotar un mensaje'], ['`E` `F` `L`', 'Editar descripción, reenviar y hacer lección'], ['`1`–`8`', 'Opciones de Adjuntar'], ['`F2`', 'Cambiar el nombre']],
+      figs: [['menu-mensaje.png', 'Menú de un mensaje, con iconos y teclas'], ['adjuntar.png', 'Adjuntar como cuadrícula'], ['proyectos-oscuro.png', 'Proyectos con portada y hojas en miniatura']] },
+
+    { id: 'timeline-lecciones', p: 'win', t: 'Timeline y lecciones aprendidas', s: 'Apunta lo que pasa en el momento, minuto a minuto, con la voz, escribiendo o con una foto. Es tan rápido como un chat, pero se ve como una línea de tiempo. Y lo que aprendes de un error se convierte en lección para no repetirlo.',
+      steps: ['Abre el Timeline y dicta, escribe o añade una foto.', 'Al dictar, di «con esto pasó…» para el **título** y «y así te lo cuento…» para la **descripción**. El audio también se guarda.', 'Revisa tus días en tres vistas: **Hoy** (últimas 24 h), **Momentos** (el archivo día a día) y **Estado** (cada mes con sus emoticonos).', 'Pulsa un momento para verlo como **historia**; compártelo como tarjeta de 1080×1350 o exporta días a HTML o PDF.', 'Pulsa la bombilla de un momento para convertirlo en **lección**, con gravedad leve, importante o grave.', 'Cuando vuelva a pasar, pulsa «Me volvió a pasar». Repasa con el **repaso espaciado**.'],
+      keys: [['`Ctrl F`', 'Buscar'], ['`R`', 'Empezar el repaso'], ['`1` `2` `3`', 'Lo recordaba · a medias · lo olvidé'], ['`S`', 'Saltar en el repaso']],
+      figs: [['timeline-hoy.png', 'Timeline: hoy'], ['timeline-lecciones.png', 'Lecciones dentro del timeline'], ['lecciones-repaso.png', 'Repaso espaciado']] },
+
+    { id: 'tareas-galeria', p: 'win', t: 'Tareas y galería de capturas', s: 'Todas las listas de todos los proyectos en una ventana, y una galería que se limpia sola para que las capturas no se acumulen.',
+      steps: ['Abre **Tareas** y elige vista de **lista** o de **tarjetas**.', 'Apunta rápido: lo nuevo entra en el **Inbox**, y «Mover a…» lo lleva a su lista.', 'Pega imágenes en una tarea con `Ctrl V`; en tarjetas, la foto es el fondo. Los emoticonos salen como estados de colores.', 'En la **Galería**, cada captura dice en rojo los días que le quedan: se borran solas a los 7 días (van a la papelera de PixPin) salvo las que conservas.', 'Busca también el texto que hay **dentro** de las capturas.'],
+      keys: [['flechas · `Espacio`', 'Moverse y elegir varias'], ['`Enter`', 'Pinear'], ['`Ctrl S`', 'Conservar'], ['`Supr` · `Ctrl Z`', 'Borrar sin preguntar · deshacer']],
+      figs: [['tareas-tarjetas.png', 'Tareas en tarjetas'], ['galeria.png', 'Galería con los días que quedan']] },
+
+    { id: 'buscar-bandeja', p: 'win', t: 'Buscar en todo y la bandeja', s: 'Encuentra cualquier cosa (archivos de los chats, tareas, lecciones, capturas y acciones) y controla PixPin desde el icono de la bandeja.',
+      steps: ['Abre **Buscar**: tiene pestañas, vista previa y se maneja entero con el teclado.', 'Usa las letras rápidas al empezar: `t` tarea, `n` nota, `l` lienzo, `g` galería, `c` capturar, `u` última captura, `a` nueva lección.', 'Haz clic izquierdo en el icono de la bandeja para abrir el **centro de control**: buscador de acciones, Capturar con sus modos, tus favoritos, interruptores de pines y atajos, y las últimas capturas.', 'El clic derecho sigue abriendo el menú clásico.'],
+      figs: [['buscar-resultados.png', 'Buscar en PixPin'], ['bandeja.png', 'Centro de control en la bandeja']] },
+
+    { id: 'lienzo', p: 'win', t: 'El lienzo', s: 'Una pizarra basada en Excalidraw con las herramientas del móvil. La barra va agrupada: cada grupo enseña su última herramienta y despliega las demás.',
+      feats: ['**Texto sin caja** con ocho letras incluidas, de Excalifont a Caveat.', '**Tinta**: lápiz, grafito, resaltador, goma y bote de relleno exacto entre figuras.', '**Construir**: recortar y extender, soldar vértices, puntos con letra, cotas, escala gráfica y calibrar.', '**Señalar y tapar**: pasos numerados, foco, lupa, pixelar o desenfocar, láser y marcadores.', '**Gráficas y tablas**, también pegadas de Excel o Sheets con celdas combinadas.', '**Zona al chat**: un rectángulo del lienzo va al chat con su vínculo de vuelta.', '**Exportar** a PNG, JPG, SVG, PDF y a una página web que se puede volver a anotar.'],
+      figs: [['barra-agrupada.png', 'Barra agrupada'], ['grafica.png', 'Una gráfica en el lienzo']] },
+
+    { id: 'planos-dwg', p: 'win', t: 'Planos de AutoCAD sin AutoCAD', s: 'Abre un DWG o DXF con doble clic, desde el chat o arrastrándolo, y se ve al momento, sin AutoCAD. Sale como un pin que se mueve y se estira como cualquier ventana.',
+      steps: ['Abre el plano. Con la rueda acercas hacia donde apunta el ratón, arrastrando lo mueves y con doble clic o `F` lo ves entero.', 'Pulsa `M` para **medir**: la regla se engancha a esquinas, centros, cualquier punto de una línea y a la perpendicular.', 'Pulsa `I` para marcar **marcos** de impresión y `Ctrl P` para sacar cada marco en su hoja, con membrete o sin él.', 'Pulsa `A` para **anotar** encima con las herramientas del lienzo. Lo anotado se guarda y sale al imprimir.', 'Pulsa `3` para ver el plano en 3D si tiene volúmenes.'],
+      keys: [['`M`', 'Medir'], ['`I` · `Ctrl P`', 'Marcos · imprimir'], ['`A`', 'Anotar'], ['`3`', 'Ver en 3D'], ['`F`', 'Ver todo'], ['`B` `T`', 'Fondo claro u oscuro · siempre encima'], ['`+` `−` flechas', 'Acercar y moverse'], ['`Esc`', 'Cerrar']],
+      tip: 'Los textos con letras de AutoCAD (**SHX**) se ven aunque no tengas AutoCAD, con ñ, tildes, ° y Ø. El grosor de la tinta se adapta al zoom.',
+      figs: [['plano-dwg.png', 'Un plano DWG abierto'], ['plano-anotar.png', 'Anotar encima del plano'], ['plano-marcos.png', 'Marcos para imprimir']] },
+
+    { id: 'modelos-3d', p: 'win', t: 'Modelos 3D de Revit e IFC', s: 'Abre un modelo .rvt o .ifc y explóralo en 3D sin tener Revit: gíralo, córtalo con una caja de sección y consulta lo que mide cada pieza.',
+      steps: ['**Girar**: arrastra con el botón izquierdo. Gira alrededor de lo que tocas; un punto naranja te enseña dónde.', '**Mover**: arrastra con el botón derecho (o `Mayús` + izquierdo). **Acercar**: la rueda.', '**¿Qué es esto?**: un clic en una pieza muestra qué es, en qué planta está, su **volumen** y su **área**.', '**Aislar**: otro clic en la misma pieza la deja sola y encuadrada. `Esc` vuelve a todo.', 'Pulsa `C` para la **caja de sección**: arrastra el tirador de una cara y esa cara corta el modelo. Lo cortado se ve macizo.', 'Pulsa `L` para **niveles y categorías**: un clic oculta o muestra; `Ctrl` + clic deja solo esa.'],
+      keys: [['`C` `L` `I`', 'Caja de sección · niveles y categorías · aislar'], ['`F` `P`', 'Ver todo · vista en planta'], ['`A` `B` `T`', 'Aristas · fondo · siempre encima'], ['flechas · `+` `−`', 'Girar y acercar']],
+      tip: 'Revit se lee con soporte para proyectos de **Revit 2023 a 2025**; los de 2022 y anteriores todavía no abren. El volumen es exacto en sólidos cerrados; si no, sale con «≈».',
+      figs: [['modelo-caja-seccion.png', 'Caja de sección'], ['modelo-niveles.png', 'Niveles y categorías'], ['modelo-aislar.png', 'Una pieza aislada con sus medidas']] },
+
+    { id: 'terrenos', p: 'win', t: 'Terrenos y carreteras (Civil 3D)', s: 'Superficies con colores por altura y curvas de nivel, ejes de carretera con su perfil, puntos, tuberías y parcelas, en 3D.',
+      steps: ['Abre un **LandXML** (.xml) para ver superficies, alineamientos y perfiles, puntos, redes de tuberías y parcelas.', 'Abre un archivo de **puntos** .csv o .txt (orden PNEZD o ENZ): se unen solos en un terreno.', 'Para un **DWG de Civil 3D**, ábrelo como plano y pulsa el botón `3D`.'],
+      tip: 'Si el dibujo se guardó sin sus gráficos (`PROXYGRAPHICS = 0`), PixPin te avisa, porque esa información no viene en el archivo.',
+      figs: [['civil-terreno.png', 'Un terreno con su carretera, desde LandXML']] },
+
+    { id: 'leer-documentos', p: 'win', t: 'Leer PDF, Word y EPUB como un pin', s: 'Los documentos se abren pequeños, como un pin, para leer al lado de lo que estás haciendo. Arriba, fuera de la hoja, sale su barra.',
+      feats: ['**Asa**: mueve la ventana.', '**Nombre · página**: un clic lo cambia.', '**Índice**: salta a un capítulo en Word y EPUB.', '**Escuchar**: te lo lee en voz alta.', '**Pantalla completa** con `F11`; `Esc` vuelve a pin.', '**Anotar** encima, con marcadores y búsqueda (`Ctrl F`).'],
+      tip: 'PixPin abre como ventana flotante: fotos (también RAW), vídeos con la GPU, audios en cola, PDF, DOCX, EPUB, PPTX, MD, planos DWG/DXF, modelos IFC/RVT y LandXML. HEIC, AVIF, JPEG XL y WebM necesitan la extensión gratuita de Microsoft Store; PixPin te dice cuál.',
+      figs: [['lector-pdf-pin.png', 'Un PDF abierto como pin']] },
+
+    { id: 'compartir-arrastrar', p: 'win', t: 'Compartir y arrastrar', s: 'Al exportar o compartir algo aparece una ventanita encima de todo con cada archivo como una tarjeta, lista para arrastrar.',
+      steps: ['Exporta o comparte (el timeline, un lienzo, un PDF anotado, capturas de la galería…).', 'Arrastra la tarjeta con el ratón a WhatsApp, al correo, a una carpeta o a cualquier app. También puedes copiar, abrir o pinear desde ahí.', 'Para llevar un pin a otra app, usa `Ctrl` + arrastrar.'],
+      tip: 'Una foto con anotaciones sale siempre **fusionada**, también si se dibujó en el móvil.',
+      figs: [['salida.png', 'Ventanita para arrastrar lo exportado']] },
+
+    { id: 'flow-launcher', p: 'win', t: 'Usar PixPin desde Flow Launcher', s: 'Con Flow Launcher usas PixPin sin abrirla: escribe p y lo que quieres hacer.',
+      keys: [['`p t comprar sellador`', 'Tarea al Inbox (pega una imagen con Ctrl V)'], ['`p n idea para la tesis`', 'Nota nueva'], ['`p g muro`', 'Buscar en la galería, también por el texto de dentro'], ['`p a revisar la escala`', 'Lección nueva'], ['`p lecciones grietas`', 'Buscar lecciones'], ['`p s`', 'Sincronizar con un móvil o con todos'], ['`p c`', 'Capturar una zona']],
+      link: ['Plugin para Flow Launcher', 'https://github.com/1xmanMAX/PIXPIN_PRO_PLUGIN_FLOWLAUNCHER'] },
+
+    { id: 'sincronizar-movil', p: 'win', t: 'Sincronizar el PC con el móvil', s: 'PixPin Max y PixPin Android leen los mismos proyectos y se sincronizan por tu Wi‑Fi, sin nube y sin cuentas.',
+      steps: ['Pon el PC y el móvil en la misma Wi‑Fi y únelos con el mismo **código de grupo** (10 letras que tecleas una vez).', 'Pulsa sincronizar: los equipos se encuentran solos y juntan los cambios uno a uno. Si prefieres, uno puede mandar («Lo mío manda»).', 'Desde Flow, `p s` muestra cada móvil con su estado y sincroniza solo con el que elijas.', 'Para mandar fotos o archivos directos, pégalos en `p s` y elige el aparato: entran en el chat que tenga abierto.'],
+      feats: ['Antes de borrar se pregunta y antes de recibir se hace **copia de seguridad**.', 'Lo anotado sobre PDF, Word y EPUB viaja en las dos direcciones (Android 0.96 o superior).', 'Un lienzo enviado desde el PC se abre en el móvil y al revés.', 'Las lecciones se juntan campo a campo.'] },
+
+    { id: 'ajustes-windows', p: 'win', t: 'Ajustes', s: 'Cada opción tiene su control, con buscador, una explicación y un punto azul en lo que has cambiado. Todo se puede restablecer.',
+      steps: ['Abre Ajustes y busca la opción por su nombre.', 'Fíjate en el punto azul para ver qué cambiaste.', 'En el lienzo, elige **qué herramientas se ven y dónde**: en la pantalla, los pines, el lienzo o el lector, para que cada barra lleve solo lo que usas ahí.'],
+      figs: [['ajustes.png', 'Ajustes con buscador']] },
+
+    { id: 'atajos', p: 'win', t: 'Todos los atajos de teclado', s: 'Solo hay un atajo general (capturar) y los gestos con Alt. El resto son letras que solo valen dentro de la ventana abierta, y cada botón muestra la suya.',
+      keys: [['En todo Windows', '`Ctrl Alt X` capturar · `Alt`+arrastrar (izquierdo copia, derecho pinea, central pin en vivo) · `Alt`+doble clic central anotar · `Ctrl 2` ocultar pines'], ['Al capturar', '`Z` `V` `P` `S` `G` `L` `T` modos · `R` repetir · `C` color · `1`–`5` herramientas · `Enter` copiar · `Ctrl P` pinear · `Ctrl M` al chat · `Ctrl T` texto · `Ctrl S` guardar · `Esc` salir'], ['En un pin', '`A` anotar · `Ctrl C` copiar · `Ctrl 0` tamaño original · `Ctrl T` dejar pasar el clic · `Mayús`+rueda opacidad · `Espacio` pausa · `M` silencio'], ['En el chat', '`R` `P` `A` `E` `F` `L` en el menú de un mensaje · `F2` cambiar nombre · `1`–`8` adjuntar'], ['Galería', 'flechas · `Espacio` elegir · `Enter` pinear · `Ctrl S` conservar · `Supr` borrar · `Ctrl Z` deshacer'], ['Lecciones', '`Ctrl F` buscar · `R` repasar · `1` `2` `3` · `S` saltar'], ['Plano DWG', '`M` medir · `I` marcos · `Ctrl P` imprimir · `A` anotar · `3` 3D · `F` todo · `B` tema · `T` encima · `Esc` cerrar'], ['Modelo 3D', '`C` caja · `L` niveles · `I` aislar · `F` todo · `P` planta · `A` aristas · `B` fondo · `T` encima · `Esc` soltar o cerrar'], ['Lector', '`F11` pantalla completa · `Esc` volver a pin · `Ctrl F` buscar']] },
+
+    // ANDROID
+    { id: 'empezar-android', p: 'and', t: 'Instalar PixPin en Android', s: 'Tu cuaderno de ingeniería en el móvil: escribe a mano, anota planos, graba la clase y ordénalo todo. Sin cuentas, sin nube y sin pagar. Necesitas Android 10 o superior.',
+      steps: ['Descarga el APK de la **última versión** en GitHub.', 'Ábrelo y permite *instalar apps de origen desconocido* (Android lo pide para todo lo que no viene de Play Store).', 'Concede los permisos de la primera pantalla y pulsa **Comenzar**.'],
+      keys: [['Mostrar sobre otras apps', 'Pines y bola flotante · imprescindible'], ['Captura de pantalla', 'El fotograma que se recorta · imprescindible'], ['Micrófono', 'Notas de voz y transcripción'], ['Red local (Wi‑Fi)', 'Sincronizar y enviar entre aparatos, sin salir a internet'], ['Internet', 'Bajar modelos de voz y compartir como enlace · opcional'], ['Cámara', 'Modo «en el sitio» del croquis · opcional'], ['Notificaciones · batería', 'Accesos rápidos y que el sistema no cierre el servicio · recomendado']],
+      figs: [['and/como-funciona.svg', 'Apuntas, se guarda en el chat, se ordena en proyectos y lo compartes']],
+      link: ['Descargar APK', 'https://github.com/1xmanMAX/PIXPIN_PRO_ANDROID/releases/latest'] },
+
+    { id: 'escribir-dibujar', p: 'and', t: 'Escribir y dibujar', s: 'Un lápiz de verdad: presión, siete durezas de grafito, figuras perfectas y cotas que miden. El mismo dibujo se abre en el lienzo, en un pin, sobre un PDF o encima de la pantalla.',
+      steps: ['Elige el **grafito** y su dureza en el panel lateral: de 4H (fina y clara) a 8B (gorda y negra), con HB en medio.', 'Escribe libremente: el trazo pasa por cada punto que da el lápiz y no se corrige solo.', 'Para una figura perfecta, deja el trazo quieto un segundo: se vuelve recta o rectángulo. Clavar la punta abre el compás.', 'Un dedo dibuja; dos dedos encuadran y nunca dibujan. Con lápiz, el dedo pasa a mover el papel.', 'Acota con cotas que calculan, escala gráfica y transportador.'],
+      feats: ['Figuras, texto con Markdown, mosaico y foco para tapar.', 'Bote de relleno que respeta agujeros, alfileres y guías.', 'Barra a tu medida: quien solo quiere lápiz, borrador y texto tiene tres botones; quien acota planos enciende cotas, escala y transportador.'],
+      figs: [['and/superficies.svg', 'Las cuatro superficies donde vive el mismo dibujo'], ['and/herramientas-dibujar.svg', 'Herramientas de dibujo'], ['and/herramientas-medir.svg', 'Cotas, escala gráfica y ángulos'], ['and/gestos.svg', 'Un dedo dibuja, dos encuadran']] },
+
+    { id: 'multitarea', p: 'and', t: 'Multitarea: varios lienzos a la vez', s: 'Hasta tres lienzos abiertos y vivos, uno al lado de otro, al estilo de los móviles plegables.',
+      keys: [['Tres dedos al lado', 'Pasa al lienzo vecino (con tres dedos el lienzo no dibuja)'], ['Cuatro dedos hacia arriba', 'La **baraja**: todos los abiertos en abanico'], ['Cuatro dedos que se abren / cierran', 'Lienzo a tamaño máximo / a un hueco'], ['Tocar la pestaña', 'Trae al vecino'], ['Arrastrar el asa', 'Reparte el tamaño, con imán en tercios y mitades']],
+      steps: ['En la baraja, desliza las tarjetas y mantén pulsada una para reordenarla. Un botón cambia entre fila y columna.', 'Pulsa **Guardar grupo** para recordar lo que tienes abierto con un nombre; un toque lo vuelve a abrir entero.', 'Las páginas de un PDF entran en la tira como un lienzo más.'] },
+
+    { id: 'chat-guardados', p: 'and', t: 'El chat: guardar sin pensar en carpetas', s: 'Todo se guarda en un chat contigo mismo, como en WhatsApp. No hay que decidir dónde va cada cosa antes de guardarla: se ordena sola por cuándo fue.',
+      feats: ['**Secciones**: todo, fotos, archivos, voz, dibujos, fijados y buzón.', '**Buzón**: lo que llega compartido de otras apps cae aquí y caduca solo.', '**Emoji** por mensaje para encontrar sin recordar ni una palabra.', '**Comentar**: una frase al lado de un PDF diciendo por qué se guardó.', '**Chat por proyecto**: lo que mandas sale con punto rojo y lo añades tú al proyecto; el punto pasa a verde.', '**Abrir con**: desde otras apps, PixPin pregunta si abrirlo, enviarlo por Wi‑Fi o ponerlo como pin.'],
+      figs: [['and/guardados.svg', 'El chat de guardados, con secciones y un chat por proyecto']] },
+
+    { id: 'leer-escuchar', p: 'and', t: 'Leer y escuchar documentos', s: 'PDF, Word, EPUB y páginas web se leen dentro, a pantalla completa. Los tres lectores tienen la misma pastilla: anotar, marcador, escuchar, página que sube sola, compartir y ajustes.',
+      steps: ['Cambia tamaño, grosor y tipo de letra en Word y libros.', 'Deja **marcadores con emoticono**: salen como puntos en el lateral; pasa el dedo y suelta para ir a uno.', 'Activa **la página que sube sola**: de 80 a 700 palabras por minuto, y abajo te dice a qué hora terminarás.', 'Pulsa **escuchar**: lo lee en alto con las voces sin conexión del teléfono. Sigue sonando con la pantalla bloqueada y un marcador verde recuerda dónde te quedaste.', 'Anota con el **editor rápido**: en un PDF el lápiz anota sobre todas las hojas; «Al proyecto» se lo lleva con lo anotado.'],
+      feats: ['**Voces en línea** o **voces de Microsoft** (más de 300, 45 en español): más naturales, pero el texto sale del teléfono.', 'Botón para oírlo **por el auricular de llamadas** en sitios con ruido.', 'Un **PDF se puede ver como texto** y un Word como PDF.', 'Zoom libre con un candado para fijar el lado.'] },
+
+    { id: 'voz', p: 'and', t: 'Voz a texto, teleprónter y pronunciar', s: 'Una nota de voz se pasa a texto en cuanto se guarda, en el teléfono y sin red. Toca un párrafo y el audio salta a ese minuto.',
+      keys: [['Vosk · 38 MB', 'Rápido y en cualquier móvil; el menos fino'], ['Whisper · 104–375 MB', 'Entiende el habla natural y puntúa; más lento; solo 64 bits'], ['Google', 'El más preciso; necesita Android 13 y el idioma descargado']],
+      feats: ['**Micrófono flotante**: graba encima de cualquier app sin abrir PixPin.', '**Teleprónter**: un texto baja solo mientras te grabas leyéndolo, con cada párrafo en su minuto.', '**Pronunciar**: mantén pulsado, habla, suelta y te oyes al momento; la mejor toma se transcribe.', '**Conversación**: varias personas por turnos, con el nombre de quién habló.', '**Llamada secreta**: a una nota de voz se le pone hora y el teléfono suena como una llamada; al contestar oyes tu grabación por el auricular.', 'Dos idiomas mezclados: deja cada trozo como se dijo o tradúcelo todo al primero.'],
+      figs: [['and/voz.svg', 'De la voz al texto']] },
+
+    { id: 'proyectos-planos', p: 'and', t: 'Proyectos y planos en PDF', s: 'Un proyecto es un conjunto de hojas: páginas de un PDF, lienzos en blanco, notas en Markdown y croquis 3D.',
+      steps: ['Mete un PDF de planos: se lee como **geometría vectorial**, nítido a cualquier zoom, con las capas de AutoCAD para encender y apagar.', '**Calibra** con dos toques sobre una medida conocida y las cotas salen en metros.', 'Usa la herramienta **Zona** para sacar un sublienzo y resolver encima, con un vínculo de vuelta a su página.', 'Marca las hojas que quieras y exporta: página web, PDF de varias hojas, imagen o `.pixpin` editable.', 'Abre un lienzo en **modo visualización** para imprimir o presentar a pantalla completa.'],
+      feats: ['Planos mayores que un A0 se cargan por trozos, como un mapa.', 'Un PowerPoint (.pptx) se convierte en PDF y entra como proyecto.', 'Antes de recibir o sincronizar se guarda una **copia de seguridad**; puedes volver a cualquier versión.'] },
+
+    { id: 'croquis-3d', p: 'and', t: 'Croquis 3D en el espacio', s: 'Dibuja en el espacio: los trazos se quedan fijos al mundo y giras alrededor de lo que ves.',
+      feats: ['Cuerpos: bola, cilindro, cono y anillo; licuar para deformar a mano.', 'Sol, grupos y vistas guardadas.', 'Mete un **IFC** de Revit o un **OBJ** de SketchUp, Blender o Rhino a escala real, con huecos de puertas y ventanas.', '**En el sitio**: la cámara del teléfono de fondo y el croquis encima a tamaño real; mueves el móvil y la vista se mueve.', 'Exporta a OBJ o a una página web con visor 3D.'],
+      figs: [['and/croquis3d.svg', 'El croquis en el espacio']] },
+
+    { id: 'tablas', p: 'and', t: 'Tablas con fórmulas', s: 'Una hoja de cálculo pequeña dentro de la app, para metrados y cálculos rápidos.',
+      steps: ['Crea una tabla y escribe fórmulas en las celdas.', 'Pega datos desde Excel o Google Sheets, o abre un .xlsx: sale una pestaña por hoja.', 'Exporta como **página web que sigue calculando**: quien la recibe cambia un número y las fórmulas se rehacen sin instalar nada. También sale como CSV.'] },
+
+    { id: 'lecciones-buscar', p: 'and', t: 'Lecciones, buscar y lista de chats', s: 'Lo que aprendes de un error se olvida en una semana si no se apunta y se repasa.',
+      feats: ['**Lecciones** en dos toques, escritas o dictadas, con foto y audio. Se proponen solas etiquetas, área y causas; si se parece a otra, ofrece «pasó otra vez».', '**Repaso espaciado** y lista de comprobación (💡 en Proyectos).', '**Buscar en PixPin**: una tarjeta que busca solo en tus cosas, sin acentos ni mayúsculas. En el buscador del teléfono, «p tesis» deja arriba lo de PixPin.', '**Lista de chats**: el botón de chat de Proyectos convierte la pantalla en tu lista de conversaciones.', '**Galería de capturas** (🖼 en Proyectos).'] },
+
+    { id: 'compartir-web', p: 'and', t: 'Compartir con quien no tiene PixPin', s: 'Cualquier dibujo, proyecto, croquis 3D o tabla se exporta como una página web en un solo archivo, que se abre en cualquier móvil u ordenador sin instalar nada y sin conexión.',
+      steps: ['Pulsa **Compartir** en el lienzo, un proyecto, el chat, el croquis o una tabla: siempre sale la misma hoja.', 'Elige el formato (imagen, PDF, SVG, página web, `.pixpin` o Wi‑Fi), qué páginas, y mira cuánto pesará.', 'Si prefieres, pide un **enlace** que dure 1 hora, 12 horas, un día o tres días.'],
+      tip: 'Subir como enlace es **lo único de toda la app que manda algo fuera del teléfono**, y solo al pulsar el botón. Quien tenga el enlace puede abrirlo mientras dure. Compartir como archivo no sale del aparato.',
+      feats: ['Quien recibe la página puede rayar encima, medir, apagar capas y **guardar**: la página se reescribe a sí misma.'],
+      figs: [['and/web.svg', 'La página web exportada']] },
+
+    { id: 'sincronizar-android', p: 'and', t: 'Sincronizar y enviar por Wi‑Fi', s: 'Tus aparatos se hablan directamente por tu Wi‑Fi, cifrado y sin servidor. Lo cambiado en los dos lados se junta, como en git.',
+      steps: ['Pon el mismo **código de grupo** en tus aparatos y pulsa sincronizar estando en la misma Wi‑Fi.', 'Para mandar algo una sola vez, elige **Enviar por Wi‑Fi**: sale un código de seis cifras y un QR.', 'Quien recibe lo escanea en **Sincronizar → Recibir**, ve qué le llega y acepta. Si ya lo tenía, elige «Actualizar el que tengo» o «Crear como nuevo».'],
+      feats: ['A+B en uno y A+C en otro dan **A+B+C**: lienzos figura por figura, tablas celda por celda, notas párrafo por párrafo.', 'Si los dos tocaron lo mismo, gana el último cambio y lo otro queda en las copias de seguridad.', 'Solo viajan los cambios, cifrados con AES‑GCM.'],
+      figs: [['and/sincronizar.svg', 'Teléfono y PC por tu Wi‑Fi, sin nube']] },
+
+    { id: 'capturar-pines-android', p: 'and', t: 'Capturar y pines en Android', s: 'Una bola flotante te da la captura y los pines desde cualquier app.',
+      keys: [['Bola · toque / doble toque', 'Menú · capturar'], ['Bola · pulsación larga', 'Ocultar o mostrar todos los pines'], ['Pin · arrastrar', 'Mover; sobre la bola, aparcar en burbuja'], ['Pin · esquina', 'Redimensionar texto, lista, cuentas o tabla'], ['Pin · pellizcar · dos dedos arriba y abajo', 'Escalar · opacidad'], ['Pin · toque · doble toque', 'Copiar o abrir · minimizar'], ['Pin · pulsación larga', 'Barra: dibujar, editar, PDF, pizarra, pegatina, guardar, cerrar']],
+      feats: ['Captura de región libre, ventana y captura larga con scroll.'],
+      figs: [['and/captura.svg', 'Bola flotante, región libre, ventana y captura larga'], ['and/pines.svg', 'Tipos de pin flotante']] },
+
+    { id: 'mini-apps', p: 'and', t: 'Mini‑apps: la palabra es el comando', s: 'Copia una palabra, pinéala y sale la herramienta. La palabra tiene que ir sola.',
+      keys: [['`time` `timer` `pomodoro`', 'Reloj y cuenta atrás (5 · 15 · 30 · 60)'], ['`crono` `cronómetro`', 'Cronómetro con décimas'], ['`todo` `compras` `tareas`', 'Lista con casillas'], ['`count` `contador`', 'Contador'], ['`gastos` `cuentas`', 'Libro de cuentas con total'], ['`board` `pizarra`', 'Pizarra con cuatro fondos y pautas'], ['`croquis` `cad` `sketch`', 'Hoja A4 para dibujar acotado']] }
+  ];
+
+  // ---------- estado ----------
+  let done = new Set();
+  try { done = new Set(JSON.parse(localStorage.getItem('pixpin-tutorial-hecho') || '[]')); } catch (e) {}
+  const save = () => { try { localStorage.setItem('pixpin-tutorial-hecho', JSON.stringify([...done])); } catch (e) {} };
+  let plat = 'all', query = '';
+
+  const PLAT = { win: ['Windows', 'plat-win'], and: ['Android', 'plat-and'] };
+  const issueUrl = (p, type, fn, title, body) => REPO[p] + '/issues/new?title=' + encodeURIComponent('[' + type + '] ' + fn + (title ? ': ' + title : '')) + '&body=' + encodeURIComponent(body);
+  const bodyTpl = (type, fn, text, dev) => type === 'Fallo'
+    ? '**Función:** ' + fn + '\n\n**Qué hice:**\n' + (text || '…') + '\n\n**Qué esperaba que pasara:**\n…\n\n**Qué pasó:**\n…\n\n**Mi equipo:** ' + (dev || '…') + '\n\n_Enviado desde el tutorial de mairumax.me_'
+    : '**Función:** ' + fn + '\n\n**Qué propongo:**\n' + (text || '…') + '\n\n**Para qué lo usaría (curso, oficina, obra…):**\n…\n\n**Mi equipo:** ' + (dev || '…') + '\n\n_Enviado desde el tutorial de mairumax.me_';
+
+  // ---------- render ----------
+  const figHTML = ([src, cap]) => {
+    const svg = src.endsWith('.svg');
+    return '<figure class="' + (svg ? 'svg' : '') + '"><button type="button" data-zoom="img/' + esc(src) + '" data-cap="' + esc(cap) + '" aria-label="Ampliar: ' + esc(cap) + '"><img src="img/' + esc(src) + '" alt="' + esc(cap) + '" loading="lazy"></button><figcaption>' + esc(cap) + '</figcaption></figure>';
+  };
+  const chHTML = (c, n) => {
+    const [pl, cls] = PLAT[c.p];
+    let h = '<article class="ch" id="' + c.id + '" data-p="' + c.p + '">';
+    h += '<div class="ch-head"><div class="ch-meta"><span class="tag ' + cls + '">' + pl + '</span><span>capítulo ' + String(n).padStart(2, '0') + '</span></div>';
+    h += '<h2>' + esc(c.t) + '</h2><p class="sum">' + md(c.s) + '</p></div><div class="ch-body">';
+    if (c.steps) h += '<div><div class="blk-title">PASO A PASO</div><ol class="steps">' + c.steps.map(s => '<li><span>' + md(s) + '</span></li>').join('') + '</ol></div>';
+    if (c.feats) h += '<div><div class="blk-title">' + (c.steps ? 'ADEMÁS' : 'LO QUE PUEDES HACER') + '</div><ul class="feats">' + c.feats.map(s => '<li>' + md(s) + '</li>').join('') + '</ul></div>';
+    if (c.keys) h += '<div><div class="blk-title">' + (c.id === 'empezar-android' ? 'PERMISOS Y PARA QUÉ SIRVEN' : c.id === 'voz' ? 'LOS TRES MOTORES DE VOZ' : 'TECLAS Y GESTOS') + '</div><div class="keys-wrap"><table class="keys"><tbody>' + c.keys.map(([k, d]) => '<tr><td>' + md(k) + '</td><td>' + md(d) + '</td></tr>').join('') + '</tbody></table></div></div>';
+    if (c.tip) h += '<div class="tip"><span class="mono">TIP</span><span>' + md(c.tip) + '</span></div>';
+    if (c.figs) h += '<div class="figs">' + c.figs.map(figHTML).join('') + '</div>';
+    if (c.link) h += '<div><a class="btn btn-main" href="' + c.link[1] + '" target="_blank" rel="noopener">' + esc(c.link[0]) + ' →</a></div>';
+    h += '</div><div class="ch-foot">';
+    h += '<button type="button" class="learn" data-learn="' + c.id + '" aria-pressed="false"><span class="box" aria-hidden="true"></span><span class="lbl">marcar como aprendido</span></button>';
+    h += '<div class="improve"><span>¿Cómo lo mejorarías?</span>';
+    h += '<a class="btn" target="_blank" rel="noopener" href="' + issueUrl(c.p, 'Mejora', c.t, '', bodyTpl('Mejora', c.t)) + '">Proponer mejora</a>';
+    h += '<a class="btn" target="_blank" rel="noopener" href="' + issueUrl(c.p, 'Fallo', c.t, '', bodyTpl('Fallo', c.t)) + '">Reportar fallo</a></div>';
+    h += '</div></article>';
+    return h;
+  };
+
+  const box = $('chapters');
+  let html = '', tocHTML = '', n = 0, last = '';
+  DATA.forEach(c => {
+    if (c.p !== last) {
+      const g = c.p === 'win' ? 'PIXPIN MAX · WINDOWS' : 'PIXPIN · ANDROID';
+      html += '<div class="group-title" data-p="' + c.p + '">' + g + '</div>';
+      tocHTML += '<h4 data-p="' + c.p + '">' + g + '</h4>';
+      last = c.p;
+    }
+    n++;
+    html += chHTML(c, n);
+    tocHTML += '<a href="#' + c.id + '" data-toc="' + c.id + '" data-p="' + c.p + '"><span class="chk" aria-hidden="true"></span><span>' + esc(c.t) + '</span></a>';
+  });
+  html += '<div class="empty" id="empty" hidden>No hay capítulos que coincidan. Prueba otra palabra o <a href="#mejorar">propón esa función</a>.</div>';
+  box.innerHTML = html;
+  $('toc').innerHTML = tocHTML + '<h4>COMUNIDAD</h4><a href="#mejorar"><span class="chk" aria-hidden="true" style="border-color:var(--accent)"></span><span>Ayúdanos a mejorar</span></a>';
+
+  // texto para buscar
+  const searchText = {};
+  DATA.forEach(c => { searchText[c.id] = [c.t, c.s, ...(c.steps || []), ...(c.feats || []), ...(c.keys || []).flat(), c.tip || ''].join(' ').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); });
+
+  const refreshDone = () => {
+    document.querySelectorAll('[data-learn]').forEach(b => {
+      const on = done.has(b.dataset.learn);
+      b.setAttribute('aria-pressed', on);
+      b.querySelector('.box').textContent = on ? '✓' : '';
+      b.querySelector('.lbl').textContent = on ? 'aprendido' : 'marcar como aprendido';
+      b.closest('.ch').classList.toggle('done', on);
+    });
+    document.querySelectorAll('[data-toc]').forEach(a => { const on = done.has(a.dataset.toc); a.classList.toggle('done', on); a.querySelector('.chk').textContent = on ? '✓' : ''; });
+    const visible = DATA.filter(c => plat === 'all' || c.p === plat);
+    const k = visible.filter(c => done.has(c.id)).length;
+    const pct = visible.length ? Math.round(k / visible.length * 100) : 0;
+    $('pct').textContent = pct + '%';
+    $('bar').style.width = pct + '%';
+    $('progTxt').textContent = k + ' de ' + visible.length + ' capítulos aprendidos' + (pct === 100 ? ' · ¡lo dominas! ahora ayúdanos a mejorarla' : '');
+  };
+
+  const applyFilter = () => {
+    const q = query.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+    let shown = 0;
+    DATA.forEach(c => {
+      const ok = (plat === 'all' || c.p === plat) && (!q || q.split(/\s+/).every(w => searchText[c.id].includes(w)));
+      $(c.id).hidden = !ok;
+      document.querySelector('[data-toc="' + c.id + '"]').hidden = !ok;
+      if (ok) shown++;
+    });
+    document.querySelectorAll('.group-title, .toc h4[data-p]').forEach(g => {
+      g.hidden = !DATA.some(c => c.p === g.dataset.p && !$(c.id).hidden);
+    });
+    $('empty').hidden = shown > 0;
+    $('tocCount').textContent = shown + ' capítulos';
+    refreshDone();
+  };
+
+  $('plat').querySelectorAll('button').forEach(b => b.onclick = () => {
+    plat = b.dataset.p;
+    $('plat').querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+    applyFilter();
+  });
+  $('q').addEventListener('input', (e) => { query = e.target.value; applyFilter(); });
+
+  box.addEventListener('click', (e) => {
+    const learn = e.target.closest('[data-learn]');
+    if (learn) { const id = learn.dataset.learn; done.has(id) ? done.delete(id) : done.add(id); save(); refreshDone(); return; }
+    const z = e.target.closest('[data-zoom]');
+    if (z) {
+      const d = $('zoom');
+      $('zoomImg').src = z.dataset.zoom; $('zoomImg').alt = z.dataset.cap; $('zoomCap').textContent = z.dataset.cap;
+      d.classList.toggle('svg', z.dataset.zoom.endsWith('.svg'));
+      if (d.showModal) d.showModal(); else window.open(z.dataset.zoom, '_blank');
+    }
+  });
+  $('zoomClose').onclick = () => $('zoom').close();
+  $('zoom').addEventListener('click', (e) => { if (e.target === $('zoom')) $('zoom').close(); });
+
+  // índice: resalta el capítulo visible
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((ents) => ents.forEach(en => {
+      if (en.isIntersecting) document.querySelectorAll('[data-toc]').forEach(a => a.classList.toggle('on', a.dataset.toc === en.target.id));
+    }), { rootMargin: '-90px 0px -65% 0px' });
+    DATA.forEach(c => io.observe($(c.id)));
+  }
+  // en móvil el índice empieza cerrado
+  if (matchMedia('(max-width: 960px)').matches) $('tocBox').open = false;
+  $('toc').addEventListener('click', (e) => { if (e.target.closest('a') && matchMedia('(max-width: 960px)').matches) $('tocBox').open = false; });
+
+  // ---------- constructor de reportes ----------
+  const fbFn = $('fbFn');
+  const fillFns = () => {
+    const p = $('fbApp').value, cur = fbFn.value;
+    fbFn.innerHTML = DATA.filter(c => c.p === p).map(c => '<option>' + esc(c.t) + '</option>').join('') + '<option>Otra función / general</option>';
+    if ([...fbFn.options].some(o => o.value === cur)) fbFn.value = cur;
+  };
+  const updateFb = () => {
+    const p = $('fbApp').value, type = $('fbType').value, fn = fbFn.value;
+    const title = $('fbTitle').value.trim(), body = bodyTpl(type, fn, $('fbText').value.trim(), $('fbDev').value.trim());
+    $('fbGo').href = issueUrl(p, type, fn, title, body);
+    $('fbPrev').textContent = 'repo:   ' + REPO[p].replace('https://github.com/', '') + '\ntítulo: [' + type + '] ' + fn + (title ? ': ' + title : '') + '\n\n' + body;
+  };
+  $('fbApp').onchange = () => { fillFns(); updateFb(); };
+  ['fbType', 'fbFn'].forEach(id => $(id).onchange = updateFb);
+  ['fbTitle', 'fbText', 'fbDev'].forEach(id => $(id).addEventListener('input', updateFb));
+  $('fb').onsubmit = (e) => e.preventDefault();
+  fillFns(); updateFb();
+
+  applyFilter();
+  if (location.hash && document.querySelector(location.hash)) document.querySelector(location.hash).scrollIntoView();
+})();
+</script>
+</body>
+</html>

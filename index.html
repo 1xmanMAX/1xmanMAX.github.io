@@ -123,6 +123,9 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:rg
 .devbox{flex:2 1 560px;border:1px solid rgba(251,191,36,.35);border-radius:16px;background:var(--term);padding:22px 24px;font-family:var(--f-mono);font-size:14px;line-height:1.9}
 .devbox .ctas{margin-top:14px;gap:10px}
 .devbox .btn{min-height:44px;padding:0 16px;font-size:14px;font-weight:700;font-family:var(--f-body)}
+.tuto-link{margin-top:20px;display:flex;flex-direction:column;gap:8px;padding:24px 28px;border-radius:16px;border:1px solid var(--accent);background:linear-gradient(90deg,rgba(255,107,26,.1),rgba(255,107,26,.02));text-decoration:none;transition:transform .2s ease}
+.tuto-link:hover{transform:translateY(-2px)}
+.tuto-link .mono{font-size:13px}
 .soon{flex:1 1 300px;border:1.5px dashed var(--line-2);border-radius:16px;padding:22px 24px;display:flex;flex-direction:column;justify-content:center;gap:8px}
 
 /* BANDERA */
@@ -239,6 +242,7 @@ footer .wrap{padding-block:32px 48px;display:flex;flex-wrap:wrap;gap:16px;justif
     </a>
     <nav class="menu" id="menu" aria-label="Secciones">
       <a class="chip" href="#productos">./productos</a>
+      <a class="chip" href="pixpin.html">./tutorial-pixpin</a>
       <a class="chip" href="#bandera">./bandera</a>
       <a class="chip" href="#principios">./principios</a>
       <a class="chip" href="#modelo">./modelo-bic</a>
@@ -325,9 +329,10 @@ footer .wrap{padding-block:32px 48px;display:flex;flex-wrap:wrap;gap:16px;justif
         <div><span style="color:var(--dim)">[info]</span> <span style="color:var(--muted)">algunas funciones pueden cambiar o fallar mientras la mejoramos.</span></div>
         <div><span style="color:var(--ok)">[tú]</span> <span style="color:var(--muted)">pruébala y cuéntanos qué falta: así funciona la construcción colectiva.</span></div>
         <div class="ctas">
-          <a class="btn btn-main" href="https://github.com/1xmanMAX/PIXPIN_PRO_WINDOWS/releases" target="_blank" rel="noopener">Probar beta · Windows</a>
+          <a class="btn btn-main" href="pixpin.html">Ver tutorial completo →</a>
+          <a class="btn" style="border:1.5px solid var(--accent);color:var(--accent-2)" href="https://github.com/1xmanMAX/PIXPIN_PRO_WINDOWS/releases" target="_blank" rel="noopener">Probar beta · Windows</a>
           <a class="btn" style="border:1.5px solid var(--accent);color:var(--accent-2)" href="https://github.com/1xmanMAX/PIXPIN_PRO_ANDROID/releases/latest" target="_blank" rel="noopener">Probar beta · Android</a>
-          <a class="btn" style="border:1px solid var(--line-2);color:var(--muted);font-weight:500" href="https://github.com/1xmanMAX/PIXPIN_PRO_ANDROID/issues" target="_blank" rel="noopener">Reportar idea o error</a>
+          <a class="btn" style="border:1px solid var(--line-2);color:var(--muted);font-weight:500" href="pixpin.html#mejorar">Ayúdanos a mejorarla</a>
         </div>
       </div>
       <div class="soon">
@@ -336,6 +341,12 @@ footer .wrap{padding-block:32px 48px;display:flex;flex-wrap:wrap;gap:16px;justif
         <span style="color:var(--muted);font-size:15px">Nuevos productos para el sector AEC, construidos con la comunidad.</span>
       </div>
     </div>
+
+    <a href="pixpin.html" class="tuto-link">
+      <span class="mono" style="color:var(--accent)">❯ pixpin tutorial --completo</span>
+      <span style="font-family:var(--f-display);font-weight:600;font-size:clamp(20px,2.4vw,28px);letter-spacing:-.02em;color:var(--text)">Aprende todas las funciones de PixPin Max, paso a paso</span>
+      <span style="color:var(--muted)">31 capítulos para Windows y Android, con capturas, atajos y tu progreso guardado. Y al final de cada uno, un botón para proponer mejoras.</span>
+    </a>
   </div>
 </section>
 
@@ -508,21 +519,23 @@ footer .wrap{padding-block:32px 48px;display:flex;flex-wrap:wrap;gap:16px;justif
     if (c === 'clear') { out.replaceChildren(); return; }
     if (!c) return;
     const R = {
-      help: [['dim', 'comandos disponibles:'], ['out', '  productos   producto estrella: PixPin Max'], ['out', '  bandera     nuestra bandera'], ['out', '  principios  los 4 principios'], ['out', '  modelo      cómo funciona el modelo BIC'], ['out', '  mision      misión de la empresa'], ['out', '  vision      visión de la empresa'], ['out', '  unirme      únete a la comunidad'], ['out', '  clear       limpiar la terminal']],
+      help: [['dim', 'comandos disponibles:'], ['out', '  productos   producto estrella: PixPin Max'], ['out', '  tutorial    tutorial completo de PixPin Max'], ['out', '  bandera     nuestra bandera'], ['out', '  principios  los 4 principios'], ['out', '  modelo      cómo funciona el modelo BIC'], ['out', '  mision      misión de la empresa'], ['out', '  vision      visión de la empresa'], ['out', '  unirme      únete a la comunidad'], ['out', '  clear       limpiar la terminal']],
       productos: [['star', '★ PixPin Max  [beta · en desarrollo]'], ['out', '  captura y anota · planos .dwg · modelos 3D Revit/IFC'], ['out', '  terrenos LandXML · proyectos tipo chat · lecciones'], ['dim', '  Windows + Android · sin nube · baja a ./productos']],
       bandera: [['ok', 'IA aplicada e innovación tecnológica para el sector AEC, con herramientas de alta calidad, alto nivel de optimización y diseñadas desde la práctica real de obra y oficina.']],
       principios: [['out', '01  IA aplicada .............. problemas reales, no teoría'], ['out', '02  Innovación constante ..... investigación y mejora continua'], ['out', '03  Calidad y optimización ... precisas, rápidas, eficientes'], ['out', '04  Construcción colectiva ... la comunidad co-crea']],
       modelo: [['out', '[1] los profesionales aportan'], ['out', '[2] los productos mejoran'], ['out', '[3] la empresa crece'], ['out', '[4] devolvemos valor al sector'], ['ok', '↺ y el ciclo vuelve a empezar']],
       mision: [['ok', MISION]], vision: [['ok', VISION]],
       unirme: [['ok', '¡Genial! Baja a la sección "Construyamos juntos" y deja tu correo.']],
+      tutorial: [['star', 'abriendo el tutorial de PixPin Max…']],
       sudo: [['star', 'aquí nadie es sudo: construimos en colectivo']]
     };
-    const alias = { pixpin: 'productos', 'modelo-bic': 'modelo', 'misión': 'mision', 'visión': 'vision', join: 'unirme' };
+    const alias = { pixpin: 'productos', ayuda: 'help', 'modelo-bic': 'modelo', 'misión': 'mision', 'visión': 'vision', join: 'unirme' };
     print([['cmd', '$ ' + c], ...(R[alias[c] || c] || [['err', 'comando no encontrado: ' + c + ' — escribe help']])]);
+    if ((alias[c] || c) === 'tutorial') setTimeout(() => { location.href = 'pixpin.html'; }, 600);
   };
   print([['dim', 'MAIRUMAX shell v1.0 — Sociedad BIC · sector AEC'], ['dim', 'escribe help o toca un comando ↓'], ['cmd', '$ whoami'], ['out', 'Una empresa BIC que crea herramientas con IA para el sector AEC, las mejora con su comunidad y le devuelve valor.']]);
   $('termForm').onsubmit = (e) => { e.preventDefault(); exec($('termIn').value); $('termIn').value = ''; };
-  ['help', 'productos', 'bandera', 'principios', 'modelo', 'mision', 'vision', 'clear'].forEach(t => {
+  ['help', 'productos', 'tutorial', 'bandera', 'principios', 'modelo', 'mision', 'vision', 'clear'].forEach(t => {
     const b = el('button', { type: 'button', class: 'chip' }, t); b.onclick = () => exec(t); $('termChips').append(b);
   });
 
