@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-label="PixPin">
+  <defs><clipPath id="sq"><path d="M48 3C86 3 93 10 93 48S86 93 48 93 3 86 3 48 10 3 48 3Z"/></clipPath></defs>
+  <path d="M48 3C86 3 93 10 93 48S86 93 48 93 3 86 3 48 10 3 48 3Z" fill="#1747A6"/>
+  <g clip-path="url(#sq)" fill="#F2F3F5">
+    <circle cx="48" cy="14" r="20"/>
+    <path d="M42.6 47H53.8L48.6 88H47.4Z"/>
+  </g>
+</svg>
