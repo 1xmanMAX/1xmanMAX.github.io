@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PinDesk para Android</title>
+<meta name="description" content="Descarga PinDesk para Android: captura, anota y fija notas flotantes; proyectos con planos, voz a texto y croquis 3D.">
+<!-- Página suelta: no la enlaza ninguna otra página y no aparece en buscadores. -->
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F1F4F3">
+<link rel="icon" href="img/pixpin-logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css">
+<style>
+.solo{min-height:100vh;display:flex;flex-direction:column}
+.top{border-bottom:1px solid var(--rule)}
+.top .wrap{height:var(--head);display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:700;font-size:22px;letter-spacing:.02em}
+main{flex:1}
+.hero{padding-block:72px 88px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:64px;align-items:center}
+.app-id{display:flex;align-items:center;gap:20px}
+.app-id img{width:84px;height:84px;flex:none}
+h1{font-size:clamp(48px,7vw,84px);line-height:.95}
+.lead{font-size:20px;color:var(--pencil);max-width:46ch;margin-top:26px}
+.meta{margin-top:14px;font-size:15px;color:var(--pencil)}
+
+/* El contador: el único elemento que destaca */
+.counter{border:1.5px solid var(--ink);background:var(--sheet);padding:28px 28px 22px}
+.counter small{display:block;font-size:15px;color:var(--pencil)}
+.counter output{display:block;font-family:var(--f-display);font-weight:700;font-size:clamp(64px,9vw,104px);line-height:1;margin-top:10px;color:var(--ink)}
+.counter output.off{color:var(--rule)}
+.counter p{margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:15px;color:var(--pencil)}
+
+.steps{padding-block:72px;border-top:1px solid var(--rule)}
+.steps h2{font-size:clamp(30px,3.6vw,42px)}
+.steps ol{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;counter-reset:p}
+.steps li{border-top:1.5px solid var(--ink);padding-top:16px;color:var(--pencil);counter-increment:p}
+.steps li::before{content:counter(p);display:block;font-family:var(--f-display);font-weight:600;font-size:28px;color:var(--red);margin-bottom:6px}
+.steps li b{color:var(--ink)}
+.note{margin-top:44px;padding-left:16px;border-left:3px solid var(--red);max-width:64ch;color:var(--pencil);font-size:16px}
+
+.foot{border-top:1.5px solid var(--ink)}
+.foot p{padding-block:16px;font-size:14px;color:var(--pencil)}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:40px}.steps ol{grid-template-columns:1fr;gap:28px}}
+@media (max-width:560px){.hero{padding-block:48px 64px}.counter{padding:22px 20px 18px}}
+</style>
+</head>
+<body class="solo">
+
+<div class="top">
+  <div class="wrap">
+    <svg width="28" height="28" viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13.5" fill="none" stroke="#18264A" stroke-width="2"/><path d="M8 20V10l7 7 7-7v10" fill="none" stroke="#C1272D" stroke-width="2.4" stroke-linejoin="round"/></svg>
+    MAIRUMAX
+  </div>
+</div>
+
+<main>
+<section class="hero drafting">
+  <div class="wrap">
+    <div>
+      <div class="app-id">
+        <img src="img/pixpin-logo.svg" alt="" width="84" height="84">
+        <div><span class="status beta">Beta · Android 10 o superior</span><h1>PinDesk</h1></div>
+      </div>
+      <p class="lead">Captura, anota y fija notas flotantes en tu Android. Un cuaderno con lienzos, proyectos con planos, voz a texto y croquis 3D. Sin cuentas obligatorias y tus datos se quedan en tu teléfono.</p>
+      <div class="ctas">
+        <a class="btn btn-red" id="dl" href="https://github.com/1xmanMAX/PINDESK-/releases" rel="noopener">Descargar APK</a>
+      </div>
+      <p class="meta" id="meta">Buscando la última versión…</p>
+    </div>
+
+    <div class="counter" aria-live="polite">
+      <small>Descargas</small>
+      <output id="count" class="off">—</output>
+      <p id="countNote">Se cuenta cada vez que alguien baja el APK.</p>
+    </div>
+  </div>
+</section>
+
+<section class="steps">
+  <div class="wrap">
+    <h2>Cómo instalarla</h2>
+    <ol>
+      <li><b>Descarga el APK</b> desde este teléfono con el botón de arriba.</li>
+      <li><b>Ábrelo</b> desde las notificaciones o la carpeta Descargas.</li>
+      <li><b>Permite instalar</b> apps de este origen cuando Android lo pida, y toca Instalar.</li>
+    </ol>
+    <p class="note">PinDesk (antes PixPin Max) todavía está en desarrollo: algunas funciones pueden cambiar o fallar. Las versiones nuevas se instalan encima de la anterior sin perder tus datos.</p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <p class="wrap">PinDesk es un proyecto de Max Mamani · MAIRUMAX. No está afiliado a PixPin ni a DepthPixel.</p>
+</footer>
+
+<script>
+(() => {
+  // Las descargas públicas viven en el repo PINDESK- (el de Android es privado). GitHub cuenta
+  // cada bajada de cada archivo; aquí se suman las de todos los .apk publicados.
+  const REPO = '1xmanMAX/PINDESK-';
+  const $ = (id) => document.getElementById(id);
+  const fmt = new Intl.NumberFormat('es-PE');
+  const fecha = (s) => new Date(s).toLocaleDateString('es-PE', { day: 'numeric', month: 'long', year: 'numeric' });
+  const mb = (b) => (b / 1048576).toFixed(0) + ' MB';
+
+  const releases = async () => {
+    const all = [];
+    for (let page = 1; page <= 5; page++) {
+      const r = await fetch(`https://api.github.com/repos/${REPO}/releases?per_page=100&page=${page}`, { headers: { Accept: 'application/vnd.github+json' } });
+      if (!r.ok) throw new Error(r.status);
+      const batch = await r.json();
+      all.push(...batch);
+      if (batch.length < 100) break;
+    }
+    return all;
+  };
+
+  releases().then(list => {
+    const isApk = (a) => /\.apk$/i.test(a.name);
+    const total = list.reduce((n, rel) => n + rel.assets.filter(isApk).reduce((m, a) => m + a.download_count, 0), 0);
+    const latest = list.filter(rel => !rel.draft && rel.assets.some(isApk))
+      .sort((a, b) => new Date(b.published_at) - new Date(a.published_at))[0];
+
+    $('count').textContent = fmt.format(total);
+    $('count').classList.remove('off');
+
+    if (!latest) {
+      $('meta').textContent = 'La primera versión se publicará aquí muy pronto.';
+      $('dl').textContent = 'Disponible pronto';
+      $('dl').removeAttribute('href');
+      $('dl').setAttribute('aria-disabled', 'true');
+      $('dl').style.opacity = '.6';
+      return;
+    }
+    const apk = latest.assets.find(isApk);
+    $('dl').href = apk.browser_download_url;
+    $('meta').textContent = `Versión ${latest.tag_name.replace(/^android-/i, '').replace(/^v/, '')} · ${mb(apk.size)} · ${fecha(latest.published_at)}`;
+  }).catch(() => {
+    $('meta').textContent = 'No se pudo consultar la versión; el botón abre la página de descargas.';
+    $('countNote').textContent = 'El contador no está disponible ahora mismo. Vuelve a intentarlo en un rato.';
+  });
+})();
+</script>
+</body>
+</html>
