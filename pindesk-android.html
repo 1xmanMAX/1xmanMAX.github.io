@@ -113,6 +113,20 @@ section.block{padding-block:72px;border-top:1px solid var(--rule)}
   // Una plataforma se activa sola en cuanto su release tiene un archivo que encaje con `match`;
   // mientras no, sale como «Pronto». El contador suma las bajadas de todos esos archivos.
   const REPO = '1xmanMAX/PINDESK-';
+
+  // **Estadísticas de visitantes** con Umami (cloud.umami.is): sin cookies y sin datos personales.
+  // Da país/región/ciudad, dispositivo, sistema, navegador, idioma, de dónde vienen (WhatsApp,
+  // LinkedIn…, y las campañas ?utm_source=) y el evento «descarga» con su plataforma.
+  // Mientras UMAMI_ID esté vacío no se carga nada.
+  const UMAMI_ID = 'cba4e95f-79f4-4ba8-a6af-ced3064a9bae';
+  if (UMAMI_ID) {
+    const s = document.createElement('script');
+    s.defer = true;
+    s.src = 'https://cloud.umami.is/script.js';
+    s.dataset.websiteId = UMAMI_ID;
+    s.dataset.domains = 'mairumax.me,www.mairumax.me';  // las pruebas en local no cuentan
+    document.head.append(s);
+  }
   const PLATFORMS = [
     { id: 'android', name: 'Android', req: 'Android 10 o superior · APK', match: /\.apk$/i },
     { id: 'windows', name: 'Windows', req: 'Windows 10 (21H2) y 11', match: /windows.*\.(zip|exe|msi|msix)$/i },
@@ -142,6 +156,9 @@ section.block{padding-block:72px;border-top:1px solid var(--rule)}
     const r = rows[p.id];
     const a = el('a', { class: 'btn btn-red', href: asset.browser_download_url, rel: 'noopener' }, `Descargar`);
     a.setAttribute('aria-label', `Descargar PinDesk para ${p.name}`);
+    a.dataset.umamiEvent = 'descarga';
+    a.dataset.umamiEventPlataforma = p.name;
+    if (rel.tag_name) a.dataset.umamiEventVersion = version(rel.tag_name);
     r.action.replaceWith(a);
     r.info.querySelector('p').textContent = `${p.req} · versión ${version(rel.tag_name)} · ${mb(asset.size)} · ${fecha(rel.published_at)}`;
   };
