@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PinDesk para Android</title>
-<meta name="description" content="Descarga PinDesk para Android: captura, anota y fija notas flotantes; proyectos con planos, voz a texto y croquis 3D.">
+<title>Descargar PinDesk</title>
+<meta name="description" content="Descarga PinDesk: captura, anota y fija notas flotantes; proyectos con planos, voz a texto y croquis 3D. Android ya disponible; Windows, Mac, iPhone y iPad pronto.">
 <!-- Página suelta: no la enlaza ninguna otra página y no aparece en buscadores. -->
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#F1F4F3">
-<link rel="icon" href="img/pixpin-logo.svg" type="image/svg+xml">
+<link rel="icon" href="img/pindesk-logo.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
@@ -20,11 +20,10 @@
 main{flex:1}
 .hero{padding-block:72px 88px}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:64px;align-items:center}
-.app-id{display:flex;align-items:center;gap:20px}
-.app-id img{width:84px;height:84px;flex:none}
+.app-id{display:flex;align-items:center;gap:22px}
+.app-id img{width:92px;height:92px;flex:none;filter:drop-shadow(0 6px 14px rgba(60,70,200,.22))}
 h1{font-size:clamp(48px,7vw,84px);line-height:.95}
 .lead{font-size:20px;color:var(--pencil);max-width:46ch;margin-top:26px}
-.meta{margin-top:14px;font-size:15px;color:var(--pencil)}
 
 /* El contador: el único elemento que destaca */
 .counter{border:1.5px solid var(--ink);background:var(--sheet);padding:28px 28px 22px}
@@ -33,9 +32,19 @@ h1{font-size:clamp(48px,7vw,84px);line-height:.95}
 .counter output.off{color:var(--rule)}
 .counter p{margin-top:14px;padding-top:14px;border-top:1px solid var(--rule);font-size:15px;color:var(--pencil)}
 
-.steps{padding-block:72px;border-top:1px solid var(--rule)}
-.steps h2{font-size:clamp(30px,3.6vw,42px)}
-.steps ol{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;counter-reset:p}
+section.block{padding-block:72px;border-top:1px solid var(--rule)}
+.block h2{font-size:clamp(30px,3.6vw,42px)}
+
+/* Plataformas: una lista con regla, como un cuadro de un plano */
+.platforms{list-style:none;margin:32px 0 0;padding:0;border-top:1.5px solid var(--ink)}
+.platforms li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:16px 24px;align-items:center;padding:18px 0;border-bottom:1px solid var(--rule)}
+.platforms h3{font-size:26px}
+.platforms p{font-size:15px;color:var(--pencil);margin-top:2px}
+.platforms .btn{min-width:170px}
+.soon{display:inline-flex;align-items:center;justify-content:center;min-height:50px;min-width:170px;padding:0 24px;border:1.5px dashed var(--rule);font-family:var(--f-display);font-weight:600;font-size:20px;color:var(--pencil);cursor:default;user-select:none}
+@media (max-width:560px){.platforms li{grid-template-columns:1fr}.platforms .btn,.soon{width:100%}}
+
+.steps{list-style:none;margin:32px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px;counter-reset:p}
 .steps li{border-top:1.5px solid var(--ink);padding-top:16px;color:var(--pencil);counter-increment:p}
 .steps li::before{content:counter(p);display:block;font-family:var(--f-display);font-weight:600;font-size:28px;color:var(--red);margin-bottom:6px}
 .steps li b{color:var(--ink)}
@@ -43,7 +52,7 @@ h1{font-size:clamp(48px,7vw,84px);line-height:.95}
 
 .foot{border-top:1.5px solid var(--ink)}
 .foot p{padding-block:16px;font-size:14px;color:var(--pencil)}
-@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:40px}.steps ol{grid-template-columns:1fr;gap:28px}}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;gap:40px}.steps{grid-template-columns:1fr;gap:28px}}
 @media (max-width:560px){.hero{padding-block:48px 64px}.counter{padding:22px 20px 18px}}
 </style>
 </head>
@@ -61,29 +70,33 @@ h1{font-size:clamp(48px,7vw,84px);line-height:.95}
   <div class="wrap">
     <div>
       <div class="app-id">
-        <img src="img/pixpin-logo.svg" alt="" width="84" height="84">
-        <div><span class="status beta">Beta · Android 10 o superior</span><h1>PinDesk</h1></div>
+        <img src="img/pindesk-logo.svg" alt="" width="92" height="92">
+        <div><span class="status beta">Beta</span><h1>PinDesk</h1></div>
       </div>
-      <p class="lead">Captura, anota y fija notas flotantes en tu Android. Un cuaderno con lienzos, proyectos con planos, voz a texto y croquis 3D. Sin cuentas obligatorias y tus datos se quedan en tu teléfono.</p>
-      <div class="ctas">
-        <a class="btn btn-red" id="dl" href="https://github.com/1xmanMAX/PINDESK-/releases" rel="noopener">Descargar APK</a>
-      </div>
-      <p class="meta" id="meta">Buscando la última versión…</p>
+      <p class="lead">Captura, anota y fija notas flotantes. Un cuaderno con lienzos, proyectos con planos, voz a texto y croquis 3D. Sin cuentas obligatorias y tus datos se quedan en tu equipo.</p>
+      <div class="ctas"><a class="btn btn-red" href="#descargar">Descargar</a></div>
     </div>
 
     <div class="counter" aria-live="polite">
       <small>Descargas</small>
       <output id="count" class="off">—</output>
-      <p id="countNote">Se cuenta cada vez que alguien baja el APK.</p>
+      <p id="countNote">Se cuenta cada vez que alguien baja la app, en cualquier plataforma.</p>
     </div>
   </div>
 </section>
 
-<section class="steps">
+<section class="block" id="descargar">
   <div class="wrap">
-    <h2>Cómo instalarla</h2>
-    <ol>
-      <li><b>Descarga el APK</b> desde este teléfono con el botón de arriba.</li>
+    <h2>Elige tu equipo</h2>
+    <ul class="platforms" id="platforms"></ul>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <h2>Cómo instalarla en Android</h2>
+    <ol class="steps">
+      <li><b>Descarga el APK</b> desde el teléfono con el botón de Android.</li>
       <li><b>Ábrelo</b> desde las notificaciones o la carpeta Descargas.</li>
       <li><b>Permite instalar</b> apps de este origen cuando Android lo pida, y toca Instalar.</li>
     </ol>
@@ -98,13 +111,42 @@ h1{font-size:clamp(48px,7vw,84px);line-height:.95}
 
 <script>
 (() => {
-  // Las descargas públicas viven en el repo PINDESK- (el de Android es privado). GitHub cuenta
-  // cada bajada de cada archivo; aquí se suman las de todos los .apk publicados.
+  // Todas las descargas públicas viven en el repo PINDESK- (los de cada app son privados).
+  // Una plataforma se activa sola en cuanto su release tiene un archivo que encaje con `match`;
+  // mientras no, sale como «Pronto». El contador suma las bajadas de todos esos archivos.
   const REPO = '1xmanMAX/PINDESK-';
+  const PLATFORMS = [
+    { id: 'android', name: 'Android', req: 'Android 10 o superior · APK', match: /\.apk$/i },
+    { id: 'windows', name: 'Windows', req: 'Windows 10 (21H2) y 11', match: /windows.*\.(zip|exe|msi|msix)$/i },
+    { id: 'mac',     name: 'Mac',     req: 'macOS', match: /(mac|macos).*\.(dmg|pkg|zip)$|\.dmg$|\.pkg$/i },
+    { id: 'iphone',  name: 'iPhone',  req: 'iOS', match: /iphone.*\.ipa$/i },
+    { id: 'ipad',    name: 'iPad',    req: 'iPadOS', match: /ipad.*\.ipa$/i },
+  ];
   const $ = (id) => document.getElementById(id);
+  const el = (tag, attrs = {}, text) => { const e = document.createElement(tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; };
   const fmt = new Intl.NumberFormat('es-PE');
   const fecha = (s) => new Date(s).toLocaleDateString('es-PE', { day: 'numeric', month: 'long', year: 'numeric' });
   const mb = (b) => (b / 1048576).toFixed(0) + ' MB';
+  const version = (tag) => tag.replace(/^(android|windows|mac|ios|ipad|iphone)-/i, '').replace(/^v/, '');
+
+  // Pinta la lista: cada plataforma con su botón o con «Pronto».
+  const rows = {};
+  PLATFORMS.forEach(p => {
+    const li = el('li'), info = el('div');
+    info.append(el('h3', {}, p.name), el('p', {}, p.req));
+    const action = el('span', { class: 'soon', 'aria-label': `${p.name}: disponible pronto` }, 'Pronto');
+    li.append(info, action);
+    $('platforms').append(li);
+    rows[p.id] = { li, info, action };
+  });
+
+  const enable = (p, rel, asset) => {
+    const r = rows[p.id];
+    const a = el('a', { class: 'btn btn-red', href: asset.browser_download_url, rel: 'noopener' }, `Descargar`);
+    a.setAttribute('aria-label', `Descargar PinDesk para ${p.name}`);
+    r.action.replaceWith(a);
+    r.info.querySelector('p').textContent = `${p.req} · versión ${version(rel.tag_name)} · ${mb(asset.size)} · ${fecha(rel.published_at)}`;
+  };
 
   const releases = async () => {
     const all = [];
@@ -115,32 +157,26 @@ h1{font-size:clamp(48px,7vw,84px);line-height:.95}
       all.push(...batch);
       if (batch.length < 100) break;
     }
-    return all;
+    return all.filter(rel => !rel.draft).sort((a, b) => new Date(b.published_at) - new Date(a.published_at));
   };
 
   releases().then(list => {
-    const isApk = (a) => /\.apk$/i.test(a.name);
-    const total = list.reduce((n, rel) => n + rel.assets.filter(isApk).reduce((m, a) => m + a.download_count, 0), 0);
-    const latest = list.filter(rel => !rel.draft && rel.assets.some(isApk))
-      .sort((a, b) => new Date(b.published_at) - new Date(a.published_at))[0];
-
+    const isApp = (a) => PLATFORMS.some(p => p.match.test(a.name));
+    const total = list.reduce((n, rel) => n + rel.assets.filter(isApp).reduce((m, a) => m + a.download_count, 0), 0);
     $('count').textContent = fmt.format(total);
     $('count').classList.remove('off');
 
-    if (!latest) {
-      $('meta').textContent = 'La primera versión se publicará aquí muy pronto.';
-      $('dl').textContent = 'Disponible pronto';
-      $('dl').removeAttribute('href');
-      $('dl').setAttribute('aria-disabled', 'true');
-      $('dl').style.opacity = '.6';
-      return;
-    }
-    const apk = latest.assets.find(isApk);
-    $('dl').href = apk.browser_download_url;
-    $('meta').textContent = `Versión ${latest.tag_name.replace(/^android-/i, '').replace(/^v/, '')} · ${mb(apk.size)} · ${fecha(latest.published_at)}`;
+    PLATFORMS.forEach(p => {
+      for (const rel of list) {           // la más reciente primero
+        const asset = rel.assets.find(a => p.match.test(a.name));
+        if (asset) { enable(p, rel, asset); break; }
+      }
+    });
   }).catch(() => {
-    $('meta').textContent = 'No se pudo consultar la versión; el botón abre la página de descargas.';
     $('countNote').textContent = 'El contador no está disponible ahora mismo. Vuelve a intentarlo en un rato.';
+    // Sin la API, al menos Android sigue descargándose por su enlace fijo.
+    enable(PLATFORMS[0], { tag_name: '', published_at: Date.now() }, { browser_download_url: 'https://github.com/1xmanMAX/PINDESK-/releases/download/android-v0.177.0/PinDesk-Android.apk', size: 43070945 });
+    rows.android.info.querySelector('p').textContent = PLATFORMS[0].req;
   });
 })();
 </script>
