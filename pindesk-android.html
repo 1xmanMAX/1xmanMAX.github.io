@@ -56,6 +56,8 @@ section.block{padding-block:72px;border-top:1px solid var(--rule)}
 .foot p{padding-block:16px;font-size:14px;color:var(--pencil)}
 @media (max-width:860px){.steps{grid-template-columns:1fr;gap:28px}}
 @media (max-width:560px){.hero{padding-block:48px 64px}}
+  .ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center}
+  .ctas .otros{color:inherit;opacity:.8;text-decoration:underline;text-underline-offset:3px}
 </style>
 </head>
 <body class="solo">
@@ -74,7 +76,10 @@ section.block{padding-block:72px;border-top:1px solid var(--rule)}
     <span class="status beta">Beta</span>
     <h1>PinDesk</h1>
     <p class="lead">Captura, anota y fija notas flotantes. Un cuaderno con lienzos, proyectos con planos, voz a texto y croquis 3D. Sin cuentas obligatorias y tus datos se quedan en tu equipo.</p>
-    <div class="ctas"><a class="btn btn-red" href="#descargar">Descargar</a></div>
+    <div class="ctas">
+      <a class="btn btn-red" id="bajarYa" href="https://github.com/1xmanMAX/PINDESK-/releases/latest/download/PinDesk-Android.apk" rel="noopener" download data-umami-event="descarga" data-umami-event-plataforma="Android">Descargar para Android</a>
+      <a class="otros" href="#descargar">Otros equipos</a>
+    </div>
     <div class="counter" aria-live="polite">
       <output id="count" class="off">—</output>
       <small>descargas</small>
@@ -113,6 +118,10 @@ section.block{padding-block:72px;border-top:1px solid var(--rule)}
   // Una plataforma se activa sola en cuanto su release tiene un archivo que encaje con `match`;
   // mientras no, sale como «Pronto». El contador suma las bajadas de todos esos archivos.
   const REPO = '1xmanMAX/PINDESK-';
+  // **Descarga directa y siempre de la última** (10-nov-2026): GitHub sirve en este enlace el APK de la release más
+  // nueva publicada (no las de prueba), así que cada versión que se publique en PINDESK- sale aquí sola, sin tocar
+  // la página. La lista de abajo la usa solo para enseñar versión, tamaño y fecha.
+  const ULTIMO_APK = `https://github.com/${REPO}/releases/latest/download/PinDesk-Android.apk`;
 
   // **Estadísticas de visitantes** con Umami (cloud.umami.is): sin cookies y sin datos personales.
   // Da país/región/ciudad, dispositivo, sistema, navegador, idioma, de dónde vienen (WhatsApp,
@@ -154,12 +163,14 @@ section.block{padding-block:72px;border-top:1px solid var(--rule)}
 
   const enable = (p, rel, asset) => {
     const r = rows[p.id];
-    const a = el('a', { class: 'btn btn-red', href: asset.browser_download_url, rel: 'noopener' }, `Descargar`);
+    const a = el('a', { class: 'btn btn-red', href: asset.browser_download_url, rel: 'noopener', download: '' }, `Descargar`);
     a.setAttribute('aria-label', `Descargar PinDesk para ${p.name}`);
     a.dataset.umamiEvent = 'descarga';
     a.dataset.umamiEventPlataforma = p.name;
     if (rel.tag_name) a.dataset.umamiEventVersion = version(rel.tag_name);
     r.action.replaceWith(a);
+    // El botón de arriba baja lo mismo que el de Android de la lista (y dice qué versión).
+    if (p.id === 'android' && rel.tag_name) { const b = $('bajarYa'); b.href = asset.browser_download_url; b.textContent = `Descargar para Android · ${version(rel.tag_name)}`; b.dataset.umamiEventVersion = version(rel.tag_name); }
     r.info.querySelector('p').textContent = `${p.req} · versión ${version(rel.tag_name)} · ${mb(asset.size)} · ${fecha(rel.published_at)}`;
   };
 
@@ -191,8 +202,8 @@ section.block{padding-block:72px;border-top:1px solid var(--rule)}
     $('countNote').textContent = 'El contador no está disponible ahora mismo. Vuelve a intentarlo en un rato.';
     $('countNote').hidden = false;
     // Sin la API, al menos Android sigue descargándose por su enlace fijo.
-    enable(PLATFORMS[0], { tag_name: '', published_at: Date.now() }, { browser_download_url: 'https://github.com/1xmanMAX/PINDESK-/releases/download/android-v0.177.0/PinDesk-Android.apk', size: 43070945 });
-    rows.android.info.querySelector('p').textContent = PLATFORMS[0].req;
+    enable(PLATFORMS[0], { tag_name: '', published_at: Date.now() }, { browser_download_url: ULTIMO_APK, size: 0 });
+    rows.android.info.querySelector('p').textContent = `${PLATFORMS[0].req} · la versión más reciente`;
   });
 })();
 </script>
