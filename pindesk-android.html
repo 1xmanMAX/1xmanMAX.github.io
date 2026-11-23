@@ -58,6 +58,19 @@ section.block{padding-block:72px;border-top:1px solid var(--rule)}
 @media (max-width:560px){.hero{padding-block:48px 64px}}
   .ctas{display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center}
   .ctas .otros{color:inherit;opacity:.8;text-decoration:underline;text-underline-offset:3px}
+  .btn-play{gap:10px;background:var(--ink);border-color:var(--ink);color:#fff}
+  .btn-play:hover{background:#0E1730;border-color:#0E1730;color:#fff}
+  .btn-play small{display:block;font-family:var(--f-body);font-weight:500;font-size:12px;letter-spacing:.04em;opacity:.8;text-transform:uppercase}
+  .btn-play span{display:flex;flex-direction:column;align-items:flex-start;line-height:1.05}
+  .beta-box{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;margin-top:28px;align-items:start}
+  .beta-box .intro{color:var(--pencil);max-width:56ch}
+  .beta-box .intro b{color:var(--ink)}
+  .beta-card{border:1.5px solid var(--ink);background:var(--sheet);padding:24px}
+  .beta-card h3{font-size:24px}
+  .beta-card ul{margin:10px 0 20px;padding-left:20px;color:var(--pencil);font-size:16px}
+  .beta-card .btn{width:100%}
+  .beta-box .steps{grid-template-columns:1fr;gap:22px;margin-top:24px}
+  @media (max-width:860px){.beta-box{grid-template-columns:1fr;gap:28px}}
 </style>
 </head>
 <body class="solo">
@@ -78,6 +91,8 @@ section.block{padding-block:72px;border-top:1px solid var(--rule)}
     <p class="lead">Captura, anota y fija notas flotantes. Un cuaderno con lienzos, proyectos con planos, voz a texto y croquis 3D. Sin cuentas obligatorias y tus datos se quedan en tu equipo.</p>
     <div class="ctas">
       <a class="btn btn-red" id="bajarYa" href="https://github.com/1xmanMAX/PINDESK-/releases/latest/download/PinDesk-Android.apk" rel="noopener" download data-umami-event="descarga" data-umami-event-plataforma="Android">Descargar para Android</a>
+      <a class="btn btn-play" href="https://play.google.com/apps/testing/com.mairumax.pindesk" rel="noopener" target="_blank" data-umami-event="google-play" data-umami-event-lugar="portada"><svg class="play-ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 3.5v17l14.5-8.5z" fill="currentColor"/></svg><span><small>Beta en</small>Google Play</span></a>
+      <a class="otros" href="#beta">Ser beta tester</a>
       <a class="otros" href="#descargar">Otros equipos</a>
     </div>
     <div class="counter" aria-live="polite">
@@ -85,6 +100,31 @@ section.block{padding-block:72px;border-top:1px solid var(--rule)}
       <small>descargas</small>
     </div>
     <p class="count-note" id="countNote" hidden></p>
+  </div>
+</section>
+
+<section class="block" id="beta">
+  <div class="wrap">
+    <h2>Sé beta tester</h2>
+    <div class="beta-box">
+      <div>
+        <p class="intro">Prueba PinDesk antes que nadie desde <b>Google Play</b>: las versiones nuevas te llegan solas, como cualquier app, y tus comentarios deciden qué mejoramos primero.</p>
+        <ol class="steps">
+          <li><b>Abre el enlace de pruebas</b> desde tu teléfono Android, con la misma cuenta de Google que usas en Play Store.</li>
+          <li><b>Toca «Ser probador»</b> (o «Become a tester») para unirte al programa.</li>
+          <li><b>Descarga PinDesk de Google Play</b> con el botón que aparece; puede tardar unos minutos en salir la primera vez.</li>
+        </ol>
+      </div>
+      <aside class="beta-card">
+        <h3>Programa de pruebas</h3>
+        <ul>
+          <li>Gratis, sin compromiso: puedes salirte cuando quieras desde el mismo enlace.</li>
+          <li>Android 10 o superior.</li>
+          <li>Actualizaciones automáticas desde Play Store.</li>
+        </ul>
+        <a class="btn btn-play" href="https://play.google.com/apps/testing/com.mairumax.pindesk" rel="noopener" target="_blank" data-umami-event="google-play" data-umami-event-lugar="beta"><svg class="play-ico" viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 3.5v17l14.5-8.5z" fill="currentColor"/></svg><span><small>Descargar en</small>Google Play</span></a>
+      </aside>
+    </div>
   </div>
 </section>
 
@@ -97,7 +137,7 @@ section.block{padding-block:72px;border-top:1px solid var(--rule)}
 
 <section class="block">
   <div class="wrap">
-    <h2>Cómo instalarla en Android</h2>
+    <h2>Instalar el APK directo (sin Play Store)</h2>
     <ol class="steps">
       <li><b>Descarga el APK</b> desde el teléfono con el botón de Android.</li>
       <li><b>Ábrelo</b> desde las notificaciones o la carpeta Descargas.</li>
